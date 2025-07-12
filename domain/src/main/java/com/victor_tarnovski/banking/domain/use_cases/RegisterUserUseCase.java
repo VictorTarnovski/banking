@@ -1,4 +1,4 @@
-package com.victor_tarnovski.banking.domain.user_cases;
+package com.victor_tarnovski.banking.domain.use_cases;
 
 import com.victor_tarnovski.banking.domain.aggregates.User;
 import com.victor_tarnovski.banking.domain.dtos.RegisterUserDTO;
