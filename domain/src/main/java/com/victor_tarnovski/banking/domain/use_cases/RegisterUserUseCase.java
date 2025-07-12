@@ -18,13 +18,12 @@ public class RegisterUserUseCase {
     if(existing.isPresent())
       throw new EmailAlreadyInUseException();
 
-    var otp = "";
     var user = new User(
       repository.nextId(),
       dto.fullName(), 
       dto.document(), 
       dto.email(), 
-      otp
+      dto.password()
     );
 
     repository.create(user);
