@@ -53,7 +53,6 @@ public class User {
   }
 
   public boolean hasPassword(String input) {
-    var password = this.password.from(input);
-    return this.password.equals(password);
+    return password.equals(input);
   }
 }

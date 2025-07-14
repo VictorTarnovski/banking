@@ -23,13 +23,9 @@ public class Password implements Comparable<Password> {
     this.value = toHex(hash(input));
   }
 
-  public Password from(String input) {
-    return new Password(salt, input);
-  }
-
   @Override
   public int compareTo(Password other) {
-    return value.compareTo(value);
+    return value.compareTo(other.value) + salt.compareTo(other.salt);
   }
 
   @Override
@@ -37,6 +33,11 @@ public class Password implements Comparable<Password> {
     if (other == null || getClass() != other.getClass())
       return false;
     Password password = (Password) other;
+    return compareTo(password) == 0;
+  }
+
+  public boolean equals(String input) {
+    var password = new Password(salt, input);
     return compareTo(password) == 0;
   }
 
