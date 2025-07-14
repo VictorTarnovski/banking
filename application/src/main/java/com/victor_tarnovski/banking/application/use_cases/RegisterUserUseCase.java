@@ -1,4 +1,4 @@
-package com.victor_tarnovski.banking.domain.use_cases;
+package com.victor_tarnovski.banking.application.use_cases;
 
 import com.victor_tarnovski.banking.domain.aggregates.User;
 import com.victor_tarnovski.banking.domain.dtos.RegisterUserDTO;
@@ -20,9 +20,9 @@ public class RegisterUserUseCase {
 
     var user = new User(
       repository.nextId(),
-      dto.fullName(), 
+      dto.fullName(),
       dto.document(), 
-      dto.email(), 
+      dto.email(),
       dto.password()
     );
 
