@@ -1,7 +1,9 @@
 package com.victor_tarnovski.banking.domain.aggregates;
 
 import java.util.Objects;
+import java.util.Optional;
 
+import com.victor_tarnovski.banking.domain.exceptions.PasswordMismatchException;
 import com.victor_tarnovski.banking.domain.ids.UserId;
 import com.victor_tarnovski.banking.domain.value_objects.Email;
 import com.victor_tarnovski.banking.domain.value_objects.Password;
@@ -11,7 +13,7 @@ public class User {
   private final String fullName;
   private final String document;
   private final Email email;
-  private final Password password;
+  private Password password;
 
   public User(
     final UserId id,
@@ -20,7 +22,6 @@ public class User {
     final String email,
     final String password
   ) {
-    Objects.requireNonNull(id, "id must not be null");
     this.id = id;
 
     Objects.requireNonNull(fullName, "fullName must not be null");
@@ -30,14 +31,14 @@ public class User {
     this.email = new Email(email);
 
     Objects.requireNonNull(password, "password must not be null");
-    this.password = new Password(password);
+    changePassword(password); 
 
     Objects.requireNonNull(document, "document must not be null");
     this.document = document;
   }
 
-  public UserId id() {
-    return id;
+  public Optional<UserId> id() {
+    return Optional.ofNullable(id);
   }
 
   public String fullName() {
@@ -52,7 +53,14 @@ public class User {
     return document;
   }
 
-  public boolean hasPassword(String input) {
-    return password.equals(input);
+  public void changePassword(String oldPassword, String newPassword) {
+    if(!password.equals(oldPassword))
+      throw new PasswordMismatchException(); 
+    
+    changePassword(newPassword);
+  }
+
+  private void changePassword(String input) {
+    password = new Password(input);
   }
 }

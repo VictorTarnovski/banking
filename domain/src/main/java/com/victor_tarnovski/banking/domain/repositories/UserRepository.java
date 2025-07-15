@@ -7,7 +7,7 @@ import com.victor_tarnovski.banking.domain.ids.UserId;
 import com.victor_tarnovski.banking.domain.value_objects.Email;
 
 public interface UserRepository {
-  UserId nextId();
-  void create(User user);
+  UserId newId();
+  User create(User user);
   Optional<User>findByEmail(Email email);
 }

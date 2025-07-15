@@ -10,7 +10,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.victor_tarnovski.banking</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>domain</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

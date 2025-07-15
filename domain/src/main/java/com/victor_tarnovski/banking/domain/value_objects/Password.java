@@ -10,10 +10,10 @@ public class Password implements Comparable<Password> {
   private String value;
 
   public Password(String input) {
-    this(salt(), input);
+    this(genSalt(), input);
   }
 
-  private Password(String salt, String input) {
+  public Password(String salt, String input) {
     Objects.requireNonNull(salt, "salt must not be null");
     this.salt = salt;
 
@@ -21,6 +21,14 @@ public class Password implements Comparable<Password> {
     if(input.isBlank())
       throw new IllegalArgumentException("input cannot be blank");
     this.value = toHex(hash(input));
+  }
+
+  public String salt() {
+    return salt;
+  }
+
+  public String value() {
+    return value;
   }
 
   @Override
@@ -37,7 +45,7 @@ public class Password implements Comparable<Password> {
   }
 
   public boolean equals(String input) {
-    var password = new Password(salt, input);
+    var password = from(input);
     return compareTo(password) == 0;
   }
 
@@ -46,7 +54,7 @@ public class Password implements Comparable<Password> {
     return Objects.hash(salt, value);
   }
 
-  private static String salt() {
+  private static String genSalt() {
     var bytes = new byte[16];
     new SecureRandom().nextBytes(bytes);
     return Base64.getEncoder().encodeToString(bytes);
@@ -67,5 +75,9 @@ public class Password implements Comparable<Password> {
       builder.append(String.format("%02X", 0xFF & b));
     }
     return builder.toString();
+  }
+
+  private Password from(String input) {
+    return new Password(salt, input);
   }
 }

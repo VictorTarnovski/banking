@@ -19,7 +19,7 @@ public class RegisterUserUseCase {
       throw new EmailAlreadyInUseException();
 
     var user = new User(
-      repository.nextId(),
+      repository.newId(),
       dto.fullName(),
       dto.document(), 
       dto.email(),
