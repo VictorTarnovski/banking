@@ -16,6 +16,15 @@ public class User {
   private Password password;
 
   public User(
+    final String fullName,
+    final String document,
+    final String email,
+    final String password
+  ) {
+    this(null, fullName, document, email, password);
+  }
+  
+  public User(
     final UserId id,
     final String fullName,
     final String document,
