@@ -1,7 +1,7 @@
 package com.victor_tarnovski.banking.application.use_cases;
 
 import com.victor_tarnovski.banking.domain.aggregates.Account;
-import com.victor_tarnovski.banking.domain.dtos.OpenAccountDTO;
+import com.victor_tarnovski.banking.domain.ids.UserId;
 import com.victor_tarnovski.banking.domain.repositories.AccountRepository;
 import com.victor_tarnovski.banking.domain.value_objects.Money;
 
@@ -19,9 +19,9 @@ public class OpenAccountUseCase {
     this.repository = repository;
   }
 
-  public void execute(OpenAccountDTO dto) {
+  public void execute(UserId userId) {
     var initialBalance = Money.dollars(); 
-    var account = new Account(initialBalance, dto.userId());
+    var account = new Account(initialBalance, userId);
   
     repository.save(account);
   }
