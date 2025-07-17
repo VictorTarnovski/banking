@@ -1,10 +1,10 @@
 package com.victor_tarnovski.banking.domain.aggregates;
 
-import java.util.Objects;
-
 import com.victor_tarnovski.banking.domain.ids.AccountId;
 import com.victor_tarnovski.banking.domain.ids.UserId;
 import com.victor_tarnovski.banking.domain.value_objects.Money;
+
+import java.util.Objects;
 
 public class Account {
   private final AccountId id;
@@ -13,24 +13,50 @@ public class Account {
   private final UserId userId;
 
   public Account(
-    AccountId id,
     Money initialBalance,
     UserId userId
   ) {
-    Objects.requireNonNull(id, "id must not be null");
+    this(
+      null,
+      initialBalance,
+      initialBalance,
+      userId
+    );
+  }
+
+  public Account(
+    Money initialBalance,
+    Money balance,
+    UserId userId
+  ) {
+    this(
+      null,
+      initialBalance,
+      balance,
+      userId
+    );
+  }
+
+  public Account(
+    AccountId id,
+    Money initialBalance,
+    Money balance,
+    UserId userId
+  ) {
     this.id = id;
 
     Objects.requireNonNull(initialBalance, "initialBalance must not be null");
     this.initialBalance = initialBalance;
-    this.balance = initialBalance;
+
+    Objects.requireNonNull(balance, "balance must not be null");
+    this.balance = balance;
 
     Objects.requireNonNull(userId, "userId must not be null");
     this.userId = userId;
-
   }
 
   public AccountId id() {
-    return id;
+    return id; 
   }
 
   public Money initialBalance() {

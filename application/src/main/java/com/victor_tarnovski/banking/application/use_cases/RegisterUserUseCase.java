@@ -6,6 +6,10 @@ import com.victor_tarnovski.banking.domain.exceptions.EmailAlreadyInUseException
 import com.victor_tarnovski.banking.domain.repositories.UserRepository;
 import com.victor_tarnovski.banking.domain.value_objects.Email;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
+@Named
+@ApplicationScoped
 public class RegisterUserUseCase {
   private final UserRepository repository;
 
@@ -25,6 +29,6 @@ public class RegisterUserUseCase {
       dto.password()
     );
 
-    repository.create(user);
+    repository.save(user);
   }  
 }

@@ -1,12 +1,11 @@
 package com.victor_tarnovski.banking.domain.aggregates;
 
-import java.util.Objects;
-import java.util.Optional;
-
 import com.victor_tarnovski.banking.domain.exceptions.PasswordMismatchException;
 import com.victor_tarnovski.banking.domain.ids.UserId;
 import com.victor_tarnovski.banking.domain.value_objects.Email;
 import com.victor_tarnovski.banking.domain.value_objects.Password;
+
+import java.util.Objects;
 
 public class User {
   private final UserId id;
@@ -46,8 +45,8 @@ public class User {
     this.document = document;
   }
 
-  public Optional<UserId> id() {
-    return Optional.ofNullable(id);
+  public UserId id() {
+    return id; 
   }
 
   public String fullName() {

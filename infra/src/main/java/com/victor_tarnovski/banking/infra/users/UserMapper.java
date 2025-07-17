@@ -18,7 +18,7 @@ public class UserMapper {
     var passwordValue = getPasswordValue(user);
 
     return UserEntity.builder()
-        .id(user.id().map(UserId::value).orElse(null))
+        .id(user.id().value())
         .fullName(user.fullName())
         .document(user.document())
         .email(user.email())
@@ -58,7 +58,7 @@ public class UserMapper {
 
     } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
       e.printStackTrace();
-      throw new InfraException("there was a error getting the password salt for User#" + user.id().get());
+      throw new InfraException("there was a error getting the password salt for User#" + user.id());
     }
   }
 
@@ -79,7 +79,7 @@ public class UserMapper {
 
     } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
       e.printStackTrace();
-      throw new InfraException("there was a error getting the password value for User#" + user.id().get());
+      throw new InfraException("there was a error getting the password value for User#" + user.id());
     }
   }
 
@@ -103,7 +103,7 @@ public class UserMapper {
 
     } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
       e.printStackTrace();
-      throw new InfraException("there was a error setting the password for User#" + user.id().get());
+      throw new InfraException("there was a error setting the password for User#" + user.id());
     }
   }
 }

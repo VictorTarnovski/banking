@@ -3,7 +3,6 @@ package com.victor_tarnovski.banking.infra.users;
 import java.util.Optional;
 
 import com.victor_tarnovski.banking.domain.aggregates.User;
-import com.victor_tarnovski.banking.domain.ids.UserId;
 import com.victor_tarnovski.banking.domain.repositories.UserRepository;
 import com.victor_tarnovski.banking.domain.value_objects.Email;
 
@@ -25,12 +24,7 @@ public class UserGateway implements UserRepository {
   }
 
   @Override
-  public UserId newId() {
-    return new UserId(repository.newId());
-  }
-
-  @Override
-  public User create(final User user) {
+  public User save(final User user) {
     var entity = mapper.toEntity(user);
     repository.save(entity);
     return mapper.toDomain(entity);

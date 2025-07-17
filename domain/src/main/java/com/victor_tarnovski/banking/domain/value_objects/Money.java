@@ -34,16 +34,19 @@ public class Money implements Comparable<Money> {
     requireNonNullCurrency(currency);
     this.currency = currency;
 
-    this.amount = amount.multiply(new BigDecimal(centFactor())).longValueExact(); 
+    this.amount = toLong(amount); 
   }
 
+  public static Money dollars() {
+    return new Money(Currency.getInstance("USD"));
+  }
   public static Money dollars(long amount) {
     return new Money(amount, Currency.getInstance("USD"));
   }
   public static Money dollars(double amount) {
     return new Money(amount, Currency.getInstance("USD"));
   }
-  public static Money doolars(BigDecimal amount) {
+  public static Money dollars(BigDecimal amount) {
     return new Money(amount, Currency.getInstance("USD"));
   }
  
@@ -126,6 +129,14 @@ public class Money implements Comparable<Money> {
     return lessThan(other) || equals(other);
   }
 
+  public long toLong(BigDecimal amount) {
+    return amount.multiply(new BigDecimal(centFactor())).longValueExact(); 
+  }
+
+  public static long toLong(BigDecimal amount, Currency currency) {
+    return amount.multiply(new BigDecimal(centFactor(currency))).longValueExact(); 
+  }
+
   //endregion
 
   //region utility methods
@@ -157,6 +168,10 @@ public class Money implements Comparable<Money> {
   }
 
   private int centFactor() {
+    return centFactor(currency);
+  }
+
+  private static int centFactor(Currency currency) {
     return cents[currency.getDefaultFractionDigits()];
   }
 

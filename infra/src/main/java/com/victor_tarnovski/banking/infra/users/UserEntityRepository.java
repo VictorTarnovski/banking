@@ -6,31 +6,16 @@ import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
-import jakarta.transaction.Transactional;
 import java.util.Optional;
-import java.util.UUID;
+
+import com.victor_tarnovski.banking.infra.EntityRepositoryBase;
 
 @Named
 @ApplicationScoped
-public class UserEntityRepository {
-  private final EntityManager entityManager;
-
+public class UserEntityRepository extends EntityRepositoryBase<UserEntity> {
   @Inject
   public UserEntityRepository(EntityManager entityManager) {
-    this.entityManager = entityManager;
-  }
-
-  public UUID newId() {
-    var uuid = (UUID) entityManager
-        .createNativeQuery("SELECT uuid_v7()")
-        .getSingleResult();
-
-    return uuid; 
-  }
-
-  @Transactional
-  public void save(UserEntity entity) {
-    entityManager.persist(entity);
+    super(entityManager);
   }
 
   public Optional<UserEntity> findByEmail(String email) {
