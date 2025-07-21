@@ -1,15 +1,17 @@
 package com.victor_tarnovski.banking.infra;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
-@Named
-@ApplicationScoped
+@Dependent
 public class EntityRepositoryBase<TEntity> {
   protected final EntityManager entityManager;
+
+  protected EntityRepositoryBase() {
+    this.entityManager = null;
+  }
 
   @Inject
   public EntityRepositoryBase(EntityManager entityManager) {

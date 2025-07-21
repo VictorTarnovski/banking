@@ -5,6 +5,11 @@ import com.victor_tarnovski.banking.domain.ids.AccountId;
 import com.victor_tarnovski.banking.domain.ids.UserId;
 import com.victor_tarnovski.banking.infra.value_objects.MoneyMapper;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
+
+@Named
+@ApplicationScoped
 public class AccountMapper {
   public AccountEntity toEntity(final Account account) {
     return AccountEntity.builder()

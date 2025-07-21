@@ -7,12 +7,15 @@ import com.victor_tarnovski.banking.domain.exceptions.EmailAlreadyInUseException
 import com.victor_tarnovski.banking.domain.value_objects.Email;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
+
 @Named
 @ApplicationScoped
 public class RegisterUserUseCase {
   private final UserRepository repository;
 
+  @Inject
   public RegisterUserUseCase(UserRepository repository) {
     this.repository = repository;
   }

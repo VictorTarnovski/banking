@@ -8,7 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
@@ -17,6 +19,8 @@ import com.victor_tarnovski.banking.infra.value_objects.MoneyEntity;
 @Entity
 @Table(name = "accounts")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AccountEntity {
   @Id
   @Column(name = "id")

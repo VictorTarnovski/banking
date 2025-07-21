@@ -3,6 +3,11 @@ package com.victor_tarnovski.banking.infra.transactions;
 import com.victor_tarnovski.banking.application.repositories.TransactionRepository;
 import com.victor_tarnovski.banking.domain.aggregates.Transaction;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
+
+@Named
+@ApplicationScoped
 public class TransactionGateway implements TransactionRepository {
   private final TransactionEntityRepository repository;
   private final TransactionMapper mapper;

@@ -7,6 +7,7 @@ import com.victor_tarnovski.banking.domain.aggregates.User;
 import com.victor_tarnovski.banking.domain.value_objects.Email;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 @Named
@@ -15,6 +16,7 @@ public class UserGateway implements UserRepository {
   private final UserEntityRepository repository;
   private final UserMapper mapper;
 
+  @Inject
   public UserGateway(
     final UserEntityRepository repository, 
     final UserMapper mapper

@@ -2,7 +2,6 @@ package com.victor_tarnovski.banking.infra.users;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
@@ -10,9 +9,12 @@ import java.util.Optional;
 
 import com.victor_tarnovski.banking.infra.EntityRepositoryBase;
 
-@Named
 @ApplicationScoped
 public class UserEntityRepository extends EntityRepositoryBase<UserEntity> {
+  protected UserEntityRepository() {
+    super();
+  }
+
   @Inject
   public UserEntityRepository(EntityManager entityManager) {
     super(entityManager);

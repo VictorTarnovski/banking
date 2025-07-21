@@ -6,6 +6,11 @@ import com.victor_tarnovski.banking.application.repositories.TransactionReposito
 import com.victor_tarnovski.banking.domain.ids.AccountId;
 import com.victor_tarnovski.banking.domain.services.TransferService;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
+
+@Named
+@ApplicationScoped
 public class TransferFundsUseCase {
   private final AccountRepository accountRepository;
   private final TransferService transferService;
