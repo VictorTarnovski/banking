@@ -23,7 +23,9 @@ public class AuthController {
     this.useCase = useCase;
   }
 
+
   @POST
+  @Path("/register")
   @Consumes(MediaType.APPLICATION_JSON)
   public Response register(final RegisterUserDTO dto) {
     useCase.execute(dto);
