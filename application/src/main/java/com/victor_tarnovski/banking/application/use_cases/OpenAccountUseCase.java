@@ -1,8 +1,8 @@
 package com.victor_tarnovski.banking.application.use_cases;
 
+import com.victor_tarnovski.banking.application.repositories.AccountRepository;
 import com.victor_tarnovski.banking.domain.aggregates.Account;
 import com.victor_tarnovski.banking.domain.ids.UserId;
-import com.victor_tarnovski.banking.domain.repositories.AccountRepository;
 import com.victor_tarnovski.banking.domain.value_objects.Money;
 
 import jakarta.enterprise.context.ApplicationScoped;

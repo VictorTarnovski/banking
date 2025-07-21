@@ -1,9 +1,9 @@
 package com.victor_tarnovski.banking.application.use_cases;
 
 import com.victor_tarnovski.banking.application.exceptions.AccountNotFoundException;
+import com.victor_tarnovski.banking.application.repositories.AccountRepository;
+import com.victor_tarnovski.banking.application.repositories.TransactionRepository;
 import com.victor_tarnovski.banking.domain.ids.AccountId;
-import com.victor_tarnovski.banking.domain.repositories.AccountRepository;
-import com.victor_tarnovski.banking.domain.repositories.TransactionRepository;
 import com.victor_tarnovski.banking.domain.services.TransferService;
 
 public class TransferFundsUseCase {

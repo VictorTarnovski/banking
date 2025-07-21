@@ -1,9 +1,9 @@
 package com.victor_tarnovski.banking.application.use_cases;
 
+import com.victor_tarnovski.banking.application.repositories.UserRepository;
 import com.victor_tarnovski.banking.domain.aggregates.User;
 import com.victor_tarnovski.banking.domain.dtos.RegisterUserDTO;
 import com.victor_tarnovski.banking.domain.exceptions.EmailAlreadyInUseException;
-import com.victor_tarnovski.banking.domain.repositories.UserRepository;
 import com.victor_tarnovski.banking.domain.value_objects.Email;
 
 import jakarta.enterprise.context.ApplicationScoped;

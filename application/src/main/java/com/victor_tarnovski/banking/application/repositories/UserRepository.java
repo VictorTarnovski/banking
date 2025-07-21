@@ -1,4 +1,4 @@
-package com.victor_tarnovski.banking.domain.repositories;
+package com.victor_tarnovski.banking.application.repositories;
 
 import java.util.Optional;
 

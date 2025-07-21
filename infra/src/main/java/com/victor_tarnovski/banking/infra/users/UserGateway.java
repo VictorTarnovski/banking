@@ -2,8 +2,8 @@ package com.victor_tarnovski.banking.infra.users;
 
 import java.util.Optional;
 
+import com.victor_tarnovski.banking.application.repositories.UserRepository;
 import com.victor_tarnovski.banking.domain.aggregates.User;
-import com.victor_tarnovski.banking.domain.repositories.UserRepository;
 import com.victor_tarnovski.banking.domain.value_objects.Email;
 
 import jakarta.enterprise.context.ApplicationScoped;
