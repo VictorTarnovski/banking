@@ -23,7 +23,7 @@ public class UserEntityRepository extends EntityRepositoryBase<UserEntity> {
   public Optional<UserEntity> findByEmail(String email) {
     try {
       TypedQuery<UserEntity> query = entityManager
-          .createQuery("SELECT u FROM users u WHERE u.email = :email", UserEntity.class);
+          .createQuery("SELECT u FROM UserEntity u WHERE u.email = :email", UserEntity.class);
       query.setParameter("email", email);
       return Optional.of(query.getSingleResult());
     } catch (NoResultException e) {
