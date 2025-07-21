@@ -1,6 +1,6 @@
 package com.victor_tarnovski.banking.presentation.controllers;
 
-import com.victor_tarnovski.banking.domain.dtos.RegisterUserDTO;
+import com.victor_tarnovski.banking.application.dtos.RegisterUserDTO;
 import com.victor_tarnovski.banking.application.use_cases.RegisterUserUseCase;
 
 import jakarta.enterprise.context.ApplicationScoped;

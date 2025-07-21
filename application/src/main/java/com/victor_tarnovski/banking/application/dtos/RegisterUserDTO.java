@@ -1,4 +1,4 @@
-package com.victor_tarnovski.banking.domain.dtos;
+package com.victor_tarnovski.banking.application.dtos;
 
 public record RegisterUserDTO(
   String fullName,
