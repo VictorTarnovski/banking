@@ -1,5 +1,7 @@
 package com.victor_tarnovski.banking.infra.accounts;
 
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,8 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Builder;
 
-import java.util.Currency;
 import java.util.UUID;
+
+import com.victor_tarnovski.banking.infra.value_objects.MoneyEntity;
 
 @Entity
 @Table(name = "accounts")
@@ -19,14 +22,16 @@ public class AccountEntity {
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   public UUID id;
-  @Column(name = "initial_balance_amount")
-  public long initialBalanceAmount;
-  @Column(name = "initial_balance_currency")
-  public Currency initialBalanceCurrency;
-  @Column(name = "balance_amount")
-  public long balanceAmount;
-  @Column(name = "balance_currency")
-  public Currency balanceCurrency;
+  @AttributeOverrides({
+    @AttributeOverride(name = "amount", column = @Column(name = "initial_balance_amount")),
+    @AttributeOverride(name = "currency", column = @Column(name = "initial_balance_currency"))
+  })
+  public MoneyEntity initialBalance;
+  @AttributeOverrides({
+    @AttributeOverride(name = "amount", column = @Column(name = "balance_amount")),
+    @AttributeOverride(name = "currency", column = @Column(name = "balance_currency"))
+  })
+  public MoneyEntity balance;
   @Column(name = "user_id")
   public UUID userId;
 }

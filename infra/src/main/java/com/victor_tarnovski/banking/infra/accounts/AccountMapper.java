@@ -3,44 +3,23 @@ package com.victor_tarnovski.banking.infra.accounts;
 import com.victor_tarnovski.banking.domain.aggregates.Account;
 import com.victor_tarnovski.banking.domain.ids.AccountId;
 import com.victor_tarnovski.banking.domain.ids.UserId;
-import com.victor_tarnovski.banking.domain.value_objects.Money;
+import com.victor_tarnovski.banking.infra.value_objects.MoneyMapper;
 
 public class AccountMapper {
   public AccountEntity toEntity(final Account account) {
-
-    var initialBalanceAmount = Money.toLong(
-      account.initialBalance().amount(), 
-      account.initialBalance().currency());
-    
-    var balanceAmount = Money.toLong(
-      account.balance().amount(), 
-      account.balance().currency());
-
     return AccountEntity.builder()
         .id(account.id().value())
-        .initialBalanceAmount(initialBalanceAmount)
-        .initialBalanceCurrency(account.initialBalance().currency())
-        .balanceAmount(balanceAmount)
-        .balanceCurrency(account.balance().currency())
+        .initialBalance(MoneyMapper.toEntity(account.initialBalance()))
+        .balance(MoneyMapper.toEntity(account.balance()))
         .userId(account.userId().value())
         .build();
   }
   
   public Account toDomain(final AccountEntity entity) {
-    var initialBalance = new Money(
-      entity.initialBalanceAmount,
-      entity.initialBalanceCurrency
-    );
-
-    var balance = new Money(
-      entity.balanceAmount,
-      entity.balanceCurrency
-    );
-
     var account = new Account(
       new AccountId(entity.id),
-      initialBalance,
-      balance,
+      MoneyMapper.toDomain(entity.initialBalance),
+      MoneyMapper.toDomain(entity.balance),
       new UserId(entity.id)
     );
 

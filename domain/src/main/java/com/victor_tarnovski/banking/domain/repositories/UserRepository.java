@@ -7,5 +7,5 @@ import com.victor_tarnovski.banking.domain.value_objects.Email;
 
 public interface UserRepository {
   User save(User user);
-  Optional<User>findByEmail(Email email);
+  Optional<User> findByEmail(Email email);
 }

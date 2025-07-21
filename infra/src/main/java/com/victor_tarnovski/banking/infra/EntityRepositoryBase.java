@@ -5,11 +5,10 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import java.util.UUID;
 
 @Named
 @ApplicationScoped
-public class EntityRepositoryBase<T> {
+public class EntityRepositoryBase<TEntity> {
   protected final EntityManager entityManager;
 
   @Inject
@@ -17,16 +16,8 @@ public class EntityRepositoryBase<T> {
     this.entityManager = entityManager;
   }
 
-  public UUID newId() {
-    var uuid = (UUID) entityManager
-        .createNativeQuery("SELECT uuid_v7()")
-        .getSingleResult();
-
-    return uuid; 
-  }
-
   @Transactional
-  public void save(T entity) {
+  public void save(TEntity entity) {
     entityManager.persist(entity);
   }
 

@@ -1,15 +1,17 @@
 package com.victor_tarnovski.banking.domain.aggregates;
 
+import com.victor_tarnovski.banking.domain.exceptions.InsufficientBalanceException;
 import com.victor_tarnovski.banking.domain.ids.AccountId;
 import com.victor_tarnovski.banking.domain.ids.UserId;
 import com.victor_tarnovski.banking.domain.value_objects.Money;
 
+import java.util.Currency;
 import java.util.Objects;
 
 public class Account {
   private final AccountId id;
   private final Money initialBalance;
-  private final Money balance;
+  private Money balance;
   private final UserId userId;
 
   public Account(
@@ -69,5 +71,21 @@ public class Account {
 
   public UserId userId() {
     return userId;
+  }
+
+  public Currency currency() {
+    return balance.currency();
+  }
+
+  public void credit(Money value) {
+    balance = balance.plus(value);
+  }
+
+  public void debit(Money value) {
+    if (!balance.greaterThanOrEqual(value)) {
+      throw new InsufficientBalanceException();
+    }
+
+    balance = balance.subtract(value);
   }
 }

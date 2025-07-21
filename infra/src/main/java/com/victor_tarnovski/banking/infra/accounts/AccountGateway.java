@@ -1,6 +1,9 @@
 package com.victor_tarnovski.banking.infra.accounts;
 
+import java.util.Optional;
+
 import com.victor_tarnovski.banking.domain.aggregates.Account;
+import com.victor_tarnovski.banking.domain.ids.AccountId;
 import com.victor_tarnovski.banking.domain.repositories.AccountRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -25,6 +28,13 @@ public class AccountGateway implements AccountRepository {
     var entity = mapper.toEntity(account);
     repository.save(entity);
     return mapper.toDomain(entity);
+  }
+
+  @Override
+  public Optional<Account> findById(AccountId id) {
+    return repository
+      .findById(id.value())
+      .map(mapper::toDomain);
   }
   
 }
