@@ -12,8 +12,9 @@ import jakarta.inject.Named;
 @ApplicationScoped
 public class AccountMapper {
   public AccountEntity toEntity(final Account account) {
+    var id = account.id() != null ? account.id().value() : null;
     return AccountEntity.builder()
-        .id(account.id().value())
+        .id(id)
         .initialBalance(MoneyMapper.toEntity(account.initialBalance()))
         .balance(MoneyMapper.toEntity(account.balance()))
         .userId(account.userId().value())

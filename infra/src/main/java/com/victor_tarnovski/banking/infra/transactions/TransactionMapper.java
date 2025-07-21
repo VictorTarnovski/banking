@@ -12,8 +12,9 @@ import jakarta.inject.Named;
 @ApplicationScoped
 public class TransactionMapper {
   public TransactionEntity toEntity(Transaction transaction) {
+    var id = transaction.id() != null ? transaction.id().value() : null;
     return TransactionEntity.builder()
-      .id(transaction.id().value())
+      .id(id)
       .amount(MoneyMapper.toEntity(transaction.amount()))
       .debtorAccontId(transaction.debtorAccountId().value())
       .creditorAccountId(transaction.creditorAccountId().value())

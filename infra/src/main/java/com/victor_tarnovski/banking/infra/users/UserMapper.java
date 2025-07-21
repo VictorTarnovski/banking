@@ -13,12 +13,15 @@ import jakarta.inject.Named;
 @Named
 @ApplicationScoped
 public class UserMapper {
+  private final String PASSWORD_PLACEHOLDER = "********";
+
   public UserEntity toEntity(final User user) {
     var passwordSalt = getPasswordSalt(user);
     var passwordValue = getPasswordValue(user);
 
+    var id = user.id() != null ? user.id().value() : null;
     return UserEntity.builder()
-        .id(user.id().value())
+        .id(id)
         .fullName(user.fullName())
         .document(user.document())
         .email(user.email())
@@ -33,7 +36,7 @@ public class UserMapper {
       entity.fullName, 
       entity.document, 
       entity.email,
-      ""
+      PASSWORD_PLACEHOLDER
     );
 
     setPassword(entity, user);
