@@ -15,43 +15,27 @@ public class Account {
   private final UserId userId;
 
   public Account(
-    Money initialBalance,
+    Currency currency,  
     UserId userId
   ) {
     this(
       null,
-      initialBalance,
-      initialBalance,
-      userId
-    );
-  }
-
-  public Account(
-    Money initialBalance,
-    Money balance,
-    UserId userId
-  ) {
-    this(
-      null,
-      initialBalance,
-      balance,
+      currency,
       userId
     );
   }
 
   public Account(
     AccountId id,
-    Money initialBalance,
-    Money balance,
+    Currency currency,
     UserId userId
   ) {
     this.id = id;
 
-    Objects.requireNonNull(initialBalance, "initialBalance must not be null");
+    Objects.requireNonNull(currency, "currency must not be null");
+    var initialBalance = new Money(0, currency);
     this.initialBalance = initialBalance;
-
-    Objects.requireNonNull(balance, "balance must not be null");
-    this.balance = balance;
+    this.balance = initialBalance;
 
     Objects.requireNonNull(userId, "userId must not be null");
     this.userId = userId;

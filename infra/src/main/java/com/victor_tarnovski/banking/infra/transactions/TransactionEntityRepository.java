@@ -13,7 +13,7 @@ public class TransactionEntityRepository extends EntityRepositoryBase<Transactio
   }
 
   @Inject
-  public TransactionEntityRepository(EntityManager entityManager) {
+  public TransactionEntityRepository(final EntityManager entityManager) {
     super(entityManager);
   }
 }

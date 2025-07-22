@@ -7,7 +7,7 @@ import com.victor_tarnovski.banking.domain.ids.AccountId;
 import com.victor_tarnovski.banking.domain.ids.UserId;
 
 public interface AccountRepository {
-  Account save(Account account);
-  Optional<Account> findById(AccountId id);
-  Optional<Account> findByUserId(UserId userId);
+  Account save(final Account account);
+  Optional<Account> findById(final AccountId id);
+  Optional<Account> findByUserId(final UserId userId);
 }

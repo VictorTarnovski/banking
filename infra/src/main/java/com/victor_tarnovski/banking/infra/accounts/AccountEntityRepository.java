@@ -17,15 +17,15 @@ public class AccountEntityRepository extends EntityRepositoryBase<AccountEntity>
   }
 
   @Inject
-  public AccountEntityRepository(EntityManager entityManager) {
+  public AccountEntityRepository(final EntityManager entityManager) {
     super(entityManager);
   }
 
-  public Optional<AccountEntity> findById(UUID id) {
+  public Optional<AccountEntity> findById(final UUID id) {
     return Optional.ofNullable(entityManager.find(AccountEntity.class, id));
   }
   
-  public Optional<AccountEntity> findByUserId(UUID userId) {
+  public Optional<AccountEntity> findByUserId(final UUID userId) {
     try {
       var query = entityManager
           .createQuery("SELECT a FROM AccountEntity a WHERE a.userId = :userId", AccountEntity.class);

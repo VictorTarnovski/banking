@@ -17,11 +17,11 @@ public class UserEntityRepository extends EntityRepositoryBase<UserEntity> {
   }
 
   @Inject
-  public UserEntityRepository(EntityManager entityManager) {
+  public UserEntityRepository(final EntityManager entityManager) {
     super(entityManager);
   }
 
-  public Optional<UserEntity> findByEmail(String email) {
+  public Optional<UserEntity> findByEmail(final String email) {
     try {
       TypedQuery<UserEntity> query = entityManager
           .createQuery("SELECT u FROM UserEntity u WHERE u.email = :email", UserEntity.class);
@@ -32,7 +32,7 @@ public class UserEntityRepository extends EntityRepositoryBase<UserEntity> {
     }
   }
 
-  public Optional<UserEntity> findById(UUID id) {
+  public Optional<UserEntity> findById(final UUID id) {
     return Optional.ofNullable(entityManager.find(UserEntity.class, id));
   }
 }

@@ -14,7 +14,7 @@ public class EntityRepositoryBase<TEntity> {
   }
 
   @Inject
-  public EntityRepositoryBase(EntityManager entityManager) {
+  public EntityRepositoryBase(final EntityManager entityManager) {
     this.entityManager = entityManager;
   }
 

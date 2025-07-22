@@ -39,7 +39,7 @@ public class UserGateway implements UserRepository {
   }
 
   @Override
-  public Optional<User> findById(UserId id) {
+  public Optional<User> findById(final UserId id) {
     return repository
       .findById(id.value())
       .map(mapper::toDomain);

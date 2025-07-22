@@ -11,11 +11,14 @@ import jakarta.inject.Named;
 @Named
 @ApplicationScoped
 public class TransferService {
-  public Transaction transfer(long debitAmount, Account debtorAccount, Account creditorAccount) {
+  public Transaction transfer(
+    final long transferAmount, 
+    final Account debtorAccount, 
+    final Account creditorAccount) {
     if (debtorAccount.id().equals(creditorAccount.id()))
       throw new RecursiveTransferException();
 
-    var amountTransfered = new Money(debitAmount, debtorAccount.currency()); 
+    var amountTransfered = new Money(transferAmount, debtorAccount.currency()); 
     debtorAccount.debit(amountTransfered);
     creditorAccount.credit(amountTransfered);
 

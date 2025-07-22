@@ -32,14 +32,14 @@ public class AccountGateway implements AccountRepository {
   }
 
   @Override
-  public Optional<Account> findById(AccountId id) {
+  public Optional<Account> findById(final AccountId id) {
     return repository
       .findById(id.value())
       .map(mapper::toDomain);
   }
 
   @Override
-  public Optional<Account> findByUserId(UserId userId) {
+  public Optional<Account> findByUserId(final UserId userId) {
     return repository
       .findByUserId(userId.value())
       .map(mapper::toDomain);

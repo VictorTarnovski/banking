@@ -21,7 +21,7 @@ public class TransactionGateway implements TransactionRepository {
   }
   
   @Override
-  public Transaction save(Transaction transaction) {
+  public Transaction save(final Transaction transaction) {
     var entity = mapper.toEntity(transaction);
     repository.save(entity);
     return mapper.toDomain(entity); 
