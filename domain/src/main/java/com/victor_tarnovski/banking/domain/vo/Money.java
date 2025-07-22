@@ -1,4 +1,4 @@
-package com.victor_tarnovski.banking.domain.value_objects;
+package com.victor_tarnovski.banking.domain.vo;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

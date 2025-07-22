@@ -2,8 +2,8 @@ package com.victor_tarnovski.banking.domain.aggregates;
 
 import com.victor_tarnovski.banking.domain.exceptions.PasswordMismatchException;
 import com.victor_tarnovski.banking.domain.ids.UserId;
-import com.victor_tarnovski.banking.domain.value_objects.Email;
-import com.victor_tarnovski.banking.domain.value_objects.Password;
+import com.victor_tarnovski.banking.domain.vo.Email;
+import com.victor_tarnovski.banking.domain.vo.Password;
 
 import java.util.Objects;
 

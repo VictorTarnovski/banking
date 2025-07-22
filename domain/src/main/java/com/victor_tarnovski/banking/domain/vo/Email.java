@@ -1,4 +1,4 @@
-package com.victor_tarnovski.banking.domain.value_objects;
+package com.victor_tarnovski.banking.domain.vo;
 
 import java.util.Objects;
 import java.util.regex.Pattern;

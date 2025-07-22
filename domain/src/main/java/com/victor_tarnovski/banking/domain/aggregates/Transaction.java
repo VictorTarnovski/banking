@@ -1,11 +1,11 @@
 package com.victor_tarnovski.banking.domain.aggregates;
 
 import com.victor_tarnovski.banking.domain.ids.TransactionId;
+import com.victor_tarnovski.banking.domain.vo.Money;
 
 import java.util.Objects;
 
 import com.victor_tarnovski.banking.domain.ids.AccountId;
-import com.victor_tarnovski.banking.domain.value_objects.Money;
 
 public class Transaction {
   private final TransactionId id;

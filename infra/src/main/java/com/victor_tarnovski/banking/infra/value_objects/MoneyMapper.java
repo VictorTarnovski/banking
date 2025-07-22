@@ -1,6 +1,6 @@
 package com.victor_tarnovski.banking.infra.value_objects;
 
-import com.victor_tarnovski.banking.domain.value_objects.Money;
+import com.victor_tarnovski.banking.domain.vo.Money;
 
 public class MoneyMapper {
   public static MoneyEntity toEntity(final Money money) {

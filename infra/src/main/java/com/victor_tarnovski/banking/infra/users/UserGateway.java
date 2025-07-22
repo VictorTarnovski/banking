@@ -5,7 +5,7 @@ import java.util.Optional;
 import com.victor_tarnovski.banking.application.repositories.UserRepository;
 import com.victor_tarnovski.banking.domain.aggregates.User;
 import com.victor_tarnovski.banking.domain.ids.UserId;
-import com.victor_tarnovski.banking.domain.value_objects.Email;
+import com.victor_tarnovski.banking.domain.vo.Email;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

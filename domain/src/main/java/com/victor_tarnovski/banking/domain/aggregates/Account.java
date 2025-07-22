@@ -3,7 +3,7 @@ package com.victor_tarnovski.banking.domain.aggregates;
 import com.victor_tarnovski.banking.domain.exceptions.InsufficientBalanceException;
 import com.victor_tarnovski.banking.domain.ids.AccountId;
 import com.victor_tarnovski.banking.domain.ids.UserId;
-import com.victor_tarnovski.banking.domain.value_objects.Money;
+import com.victor_tarnovski.banking.domain.vo.Money;
 
 import java.util.Currency;
 import java.util.Objects;

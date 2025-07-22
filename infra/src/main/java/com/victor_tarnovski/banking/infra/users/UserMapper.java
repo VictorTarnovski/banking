@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 
 import com.victor_tarnovski.banking.domain.aggregates.User;
 import com.victor_tarnovski.banking.domain.ids.UserId;
-import com.victor_tarnovski.banking.domain.value_objects.Password;
+import com.victor_tarnovski.banking.domain.vo.Password;
 import com.victor_tarnovski.banking.infra.exceptions.InfraException;
 
 import jakarta.enterprise.context.ApplicationScoped;

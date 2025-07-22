@@ -3,7 +3,7 @@ package com.victor_tarnovski.banking.domain.services;
 import com.victor_tarnovski.banking.domain.aggregates.Account;
 import com.victor_tarnovski.banking.domain.aggregates.Transaction;
 import com.victor_tarnovski.banking.domain.exceptions.RecursiveTransferException;
-import com.victor_tarnovski.banking.domain.value_objects.Money;
+import com.victor_tarnovski.banking.domain.vo.Money;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
