@@ -8,6 +8,7 @@ import com.victor_tarnovski.banking.infra.EntityRepositoryBase;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 
 @ApplicationScoped
 public class AccountEntityRepository extends EntityRepositoryBase<AccountEntity> {
@@ -24,4 +25,14 @@ public class AccountEntityRepository extends EntityRepositoryBase<AccountEntity>
     return Optional.ofNullable(entityManager.find(AccountEntity.class, id));
   }
   
+  public Optional<AccountEntity> findByUserId(UUID userId) {
+    try {
+      var query = entityManager
+          .createQuery("SELECT a FROM AccountEntity a WHERE a.userId = :userId", AccountEntity.class);
+      query.setParameter("userId", userId);
+      return Optional.of(query.getSingleResult());
+    } catch (NoResultException e) {
+      return Optional.empty();
+    }
+  }
 }

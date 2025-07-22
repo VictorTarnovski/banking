@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.victor_tarnovski.banking.application.repositories.UserRepository;
 import com.victor_tarnovski.banking.domain.aggregates.User;
+import com.victor_tarnovski.banking.domain.ids.UserId;
 import com.victor_tarnovski.banking.domain.value_objects.Email;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -35,6 +36,13 @@ public class UserGateway implements UserRepository {
   @Override
   public Optional<User> findByEmail(final Email email) {
     return repository.findByEmail(email.value()).map(mapper::toDomain);
+  }
+
+  @Override
+  public Optional<User> findById(UserId id) {
+    return repository
+      .findById(id.value())
+      .map(mapper::toDomain);
   }
   
 }

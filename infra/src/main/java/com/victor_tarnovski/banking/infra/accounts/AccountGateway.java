@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.victor_tarnovski.banking.application.repositories.AccountRepository;
 import com.victor_tarnovski.banking.domain.aggregates.Account;
 import com.victor_tarnovski.banking.domain.ids.AccountId;
+import com.victor_tarnovski.banking.domain.ids.UserId;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
@@ -34,6 +35,13 @@ public class AccountGateway implements AccountRepository {
   public Optional<Account> findById(AccountId id) {
     return repository
       .findById(id.value())
+      .map(mapper::toDomain);
+  }
+
+  @Override
+  public Optional<Account> findByUserId(UserId userId) {
+    return repository
+      .findByUserId(userId.value())
       .map(mapper::toDomain);
   }
   

@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.victor_tarnovski.banking.infra.EntityRepositoryBase;
 
@@ -29,5 +30,9 @@ public class UserEntityRepository extends EntityRepositoryBase<UserEntity> {
     } catch (NoResultException e) {
       return Optional.empty();
     }
+  }
+
+  public Optional<UserEntity> findById(UUID id) {
+    return Optional.ofNullable(entityManager.find(UserEntity.class, id));
   }
 }
