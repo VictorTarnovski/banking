@@ -62,7 +62,7 @@ public class Account {
   }
 
   public void credit(Money value) {
-    balance = balance.plus(value);
+    balance = balance.add(value);
   }
 
   public void debit(Money value) {

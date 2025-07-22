@@ -64,14 +64,14 @@ public class Money implements Comparable<Money> {
   //endregion
 
   //region public methods
-  public Money plus(Money other) {
+  public Money add(Money other) {
     assertSameCurrencyAs(other);
-    return newMoney(amount + other.amount);
+    return newMoney(amount().add(other.amount()));
   }
 
   public Money subtract(Money other) {
     assertSameCurrencyAs(other);
-    return newMoney(amount - other.amount);
+    return newMoney(amount().subtract(other.amount()));
   }
   
   public Money multiply(double amount) {
@@ -83,7 +83,11 @@ public class Money implements Comparable<Money> {
   }
   
   public Money multiply(BigDecimal amount, RoundingMode roundingMode) {
-    return new Money(amount().multiply(amount), currency);
+    return newMoney(amount().multiply(amount));
+  }
+
+  public Money negate() {
+    return newMoney(amount().multiply(new BigDecimal(-1)));
   }
 
   public Money[] allocate(int n) {
@@ -130,7 +134,7 @@ public class Money implements Comparable<Money> {
   }
 
   public long toLong(BigDecimal amount) {
-    return amount.multiply(new BigDecimal(centFactor())).longValueExact(); 
+    return toLong(amount, currency);
   }
 
   public static long toLong(BigDecimal amount, Currency currency) {
@@ -162,13 +166,12 @@ public class Money implements Comparable<Money> {
   //endregion
 
   //region private methods
-  
   private Money newMoney(long amount) {
     return new Money(amount, currency);
   }
 
-  private int centFactor() {
-    return centFactor(currency);
+  private Money newMoney(BigDecimal amount) {
+    return new Money(amount, currency);
   }
 
   private static int centFactor(Currency currency) {

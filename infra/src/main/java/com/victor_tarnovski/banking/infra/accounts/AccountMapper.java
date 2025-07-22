@@ -24,10 +24,11 @@ public class AccountMapper {
   public Account toDomain(final AccountEntity entity) {
     var account = new Account(
       new AccountId(entity.id),
-      MoneyMapper.toDomain(entity.initialBalance),
-      MoneyMapper.toDomain(entity.balance),
+      entity.initialBalance.currency,
       new UserId(entity.id)
     );
+
+    account.credit(MoneyMapper.toDomain(entity.balance));
 
     return account;
   }

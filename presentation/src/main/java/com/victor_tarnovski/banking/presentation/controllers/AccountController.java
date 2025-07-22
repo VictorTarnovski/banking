@@ -1,5 +1,6 @@
 package com.victor_tarnovski.banking.presentation.controllers;
 
+import java.util.Currency;
 import java.util.UUID;
 
 import com.victor_tarnovski.banking.application.use_cases.OpenAccountUseCase;
@@ -30,7 +31,7 @@ public class AccountController {
     @HeaderParam("X-UserId")
     final UUID userId
   ) {
-    useCase.execute(new UserId(userId));
+    useCase.execute(Currency.getInstance("USD"), new UserId(userId));
     return Response.ok().build();
   }
 
