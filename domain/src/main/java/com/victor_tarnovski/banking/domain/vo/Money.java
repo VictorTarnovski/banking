@@ -1,7 +1,6 @@
 package com.victor_tarnovski.banking.domain.vo;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Currency;
 import java.util.Objects;
 
@@ -68,30 +67,24 @@ public class Money implements Comparable<Money> {
   //endregion
 
   //region public methods
-  public Money add(Money other) {
-    assertSameCurrencyAs(other);
-    return newMoney(amount().add(other.amount()));
+  public Money add(Money augend) {
+    assertSameCurrencyAs(augend);
+    return newMoney(amount().add(augend.amount()));
   }
 
-  public Money subtract(Money other) {
-    assertSameCurrencyAs(other);
-    return newMoney(amount().subtract(other.amount()));
+  public Money subtract(Money subtrahend) {
+    assertSameCurrencyAs(subtrahend);
+    return newMoney(amount().subtract(subtrahend.amount()));
   }
   
-  public Money multiply(double amount) {
-    return multiply(new BigDecimal(amount));
+  public Money multiply(Money multiplicand) {
+    assertSameCurrencyAs(multiplicand);
+    return newMoney(amount().multiply(multiplicand.amount()));
   }
 
-  public Money multiply(BigDecimal amount) {
-    return multiply(amount, RoundingMode.HALF_EVEN);
-  }
-  
-  public Money multiply(BigDecimal amount, RoundingMode roundingMode) {
-    return newMoney(amount().multiply(amount));
-  }
-
-  public Money negate() {
-    return newMoney(amount().negate());
+  public Money divide(Money divisor) {
+    assertSameCurrencyAs(divisor);
+    return newMoney(amount().divide(divisor.amount()));
   }
 
   public Money[] allocate(int n) {
@@ -117,10 +110,6 @@ public class Money implements Comparable<Money> {
       results[i].amount++;
     }
     return results;
-  }
-
-  public boolean greaterThan(long amount) {
-    return greaterThan(newMoney(amount));
   }
 
   public boolean greaterThan(Money other) {

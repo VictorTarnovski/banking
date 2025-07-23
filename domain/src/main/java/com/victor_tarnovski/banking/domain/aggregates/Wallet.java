@@ -67,14 +67,14 @@ public class Wallet {
 
   public void credit(Money value) {
     Objects.requireNonNull(value, "value must not be null");
-    ensureGreaterThanZero(value);
+    ensureGreaterThanOrEqualZero(value);
 
     balance = balance.add(value);
   }
 
   public void debit(Money value) {
     Objects.requireNonNull(value, "value must not be null");
-    ensureGreaterThanZero(value);
+    ensureGreaterThanOrEqualZero(value);
 
     if (!balance.greaterThanOrEqual(value)) {
       throw new InsufficientBalanceException();
@@ -83,8 +83,9 @@ public class Wallet {
     balance = balance.subtract(value);
   }
 
-  private void ensureGreaterThanZero(Money value) {
-    if (!value.greaterThan(0)) {
+  private void ensureGreaterThanOrEqualZero(Money value) {
+    var zero = new Money(value.currency());
+    if (!value.greaterThanOrEqual(zero)) {
       throw new IllegalArgumentException("value must be greater than zero");
     }
   }
