@@ -25,7 +25,7 @@ public class WalletMapper {
     var wallet = new Wallet(
       new WalletId(entity.id),
       entity.initialBalance.currency,
-      new UserId(entity.id)
+      new UserId(entity.userId)
     );
 
     wallet.deposit(MoneyMapper.toDomain(entity.balance));
