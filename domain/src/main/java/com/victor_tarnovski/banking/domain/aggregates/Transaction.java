@@ -5,38 +5,38 @@ import com.victor_tarnovski.banking.domain.vo.Money;
 
 import java.util.Objects;
 
-import com.victor_tarnovski.banking.domain.ids.AccountId;
+import com.victor_tarnovski.banking.domain.ids.WalletId;
 
 public class Transaction {
   private final TransactionId id;
   private final Money amount;
-  private final AccountId debtorAccountId;
-  private final AccountId creditorAccountId;
+  private final WalletId debtorWalletId;
+  private final WalletId creditorWalletId;
 
   public Transaction(
     final Money amount,
-    final AccountId debtorAccountId,
-    final AccountId creditorAccountId
+    final WalletId debtorWalletId,
+    final WalletId creditorWalletId
   ) {
-    this(null, amount, debtorAccountId, creditorAccountId);
+    this(null, amount, debtorWalletId, creditorWalletId);
   }
   
   public Transaction(
     final TransactionId id,
     final Money amount,
-    final AccountId debtorAccountId,
-    final AccountId creditorAccountId
+    final WalletId debtorWalletId,
+    final WalletId creditorWalletId
   ) {
     this.id = id;
     
     Objects.requireNonNull(amount, "amount must not be null");
     this.amount = amount;
 
-    Objects.requireNonNull(debtorAccountId, "debtorAccountId must not be null");
-    this.debtorAccountId = debtorAccountId;
+    Objects.requireNonNull(debtorWalletId, "debtorWalletId must not be null");
+    this.debtorWalletId = debtorWalletId;
     
-    Objects.requireNonNull(creditorAccountId, "creditorAccountId must not be null");
-    this.creditorAccountId = creditorAccountId;
+    Objects.requireNonNull(creditorWalletId, "creditorWalletId must not be null");
+    this.creditorWalletId = creditorWalletId;
   }
 
   public TransactionId id() {
@@ -47,12 +47,12 @@ public class Transaction {
     return amount;
   }
   
-  public AccountId debtorAccountId() {
-    return debtorAccountId;
+  public WalletId debtorWalletId() {
+    return debtorWalletId;
   }
 
-  public AccountId creditorAccountId() {
-    return creditorAccountId;
+  public WalletId creditorWalletId() {
+    return creditorWalletId;
   }
 
 }

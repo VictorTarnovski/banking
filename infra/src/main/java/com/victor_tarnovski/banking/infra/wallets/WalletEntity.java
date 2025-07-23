@@ -1,4 +1,4 @@
-package com.victor_tarnovski.banking.infra.accounts;
+package com.victor_tarnovski.banking.infra.wallets;
 
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
@@ -17,11 +17,11 @@ import java.util.UUID;
 import com.victor_tarnovski.banking.infra.value_objects.MoneyEntity;
 
 @Entity
-@Table(name = "accounts")
+@Table(name = "wallets")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountEntity {
+public class WalletEntity {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)

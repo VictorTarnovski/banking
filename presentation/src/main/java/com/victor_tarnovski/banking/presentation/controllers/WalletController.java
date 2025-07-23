@@ -4,8 +4,8 @@ import java.util.Currency;
 import java.util.UUID;
 
 import com.victor_tarnovski.banking.application.use_cases.AddBalanceUseCase;
-import com.victor_tarnovski.banking.application.use_cases.OpenAccountUseCase;
-import com.victor_tarnovski.banking.domain.ids.AccountId;
+import com.victor_tarnovski.banking.application.use_cases.CreateWalletUseCase;
+import com.victor_tarnovski.banking.domain.ids.WalletId;
 import com.victor_tarnovski.banking.domain.ids.UserId;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -18,19 +18,19 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/v1/accounts")
+@Path("/v1/wallets")
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
-public class AccountController {
-  private final OpenAccountUseCase openAccountUseCase;
+public class WalletController {
+  private final CreateWalletUseCase createWalletUseCase;
   private final AddBalanceUseCase addBalanceUseCase;
 
   @Inject
-  AccountController(
-    final OpenAccountUseCase openAccountUseCase,
+  WalletController(
+    final CreateWalletUseCase createWalletUseCase,
     final AddBalanceUseCase addBalanceUseCase
   ) {
-    this.openAccountUseCase = openAccountUseCase;
+    this.createWalletUseCase = createWalletUseCase;
     this.addBalanceUseCase = addBalanceUseCase;
   }
 
@@ -39,19 +39,19 @@ public class AccountController {
     @HeaderParam("X-UserId")
     final UUID userId
   ) {
-    openAccountUseCase.execute(Currency.getInstance("USD"), new UserId(userId));
+    createWalletUseCase.execute(Currency.getInstance("USD"), new UserId(userId));
     return Response.ok().build();
   }
 
   @POST
-  @Path("/{accountId}/balance/{amount}")
+  @Path("/{walletId}/balance/{amount}")
   public Response addBalance(
-    @PathParam("accountId")
-    final UUID accountId,
+    @PathParam("walletId")
+    final UUID walletId,
     @PathParam("amount")
     final long amount 
   ) {
-    addBalanceUseCase.execute(new AccountId(accountId), amount);
+    addBalanceUseCase.execute(new WalletId(walletId), amount);
     return Response.ok().build();
   } 
 

@@ -1,4 +1,4 @@
-package com.victor_tarnovski.banking.infra.accounts;
+package com.victor_tarnovski.banking.infra.wallets;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -11,24 +11,24 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 
 @ApplicationScoped
-public class AccountEntityRepository extends EntityRepositoryBase<AccountEntity> {
-  protected AccountEntityRepository() {
+public class WalletEntityRepository extends EntityRepositoryBase<WalletEntity> {
+  protected WalletEntityRepository() {
     super();
   }
 
   @Inject
-  public AccountEntityRepository(final EntityManager entityManager) {
+  public WalletEntityRepository(final EntityManager entityManager) {
     super(entityManager);
   }
 
-  public Optional<AccountEntity> findById(final UUID id) {
-    return Optional.ofNullable(entityManager.find(AccountEntity.class, id));
+  public Optional<WalletEntity> findById(final UUID id) {
+    return Optional.ofNullable(entityManager.find(WalletEntity.class, id));
   }
   
-  public Optional<AccountEntity> findByUserId(final UUID userId) {
+  public Optional<WalletEntity> findByUserId(final UUID userId) {
     try {
       var query = entityManager
-          .createQuery("SELECT a FROM AccountEntity a WHERE a.userId = :userId", AccountEntity.class);
+          .createQuery("SELECT a FROM WalletEntity a WHERE a.userId = :userId", WalletEntity.class);
       query.setParameter("userId", userId);
       return Optional.of(query.getSingleResult());
     } catch (NoResultException e) {

@@ -1,7 +1,7 @@
 package com.victor_tarnovski.banking.infra.transactions;
 
 import com.victor_tarnovski.banking.domain.aggregates.Transaction;
-import com.victor_tarnovski.banking.domain.ids.AccountId;
+import com.victor_tarnovski.banking.domain.ids.WalletId;
 import com.victor_tarnovski.banking.domain.ids.TransactionId;
 import com.victor_tarnovski.banking.infra.value_objects.MoneyMapper;
 
@@ -16,8 +16,8 @@ public class TransactionMapper {
     return TransactionEntity.builder()
       .id(id)
       .amount(MoneyMapper.toEntity(transaction.amount()))
-      .debtorAccontId(transaction.debtorAccountId().value())
-      .creditorAccountId(transaction.creditorAccountId().value())
+      .debtorWalletId(transaction.debtorWalletId().value())
+      .creditorWalletId(transaction.creditorWalletId().value())
       .build();
   }
 
@@ -25,8 +25,8 @@ public class TransactionMapper {
     var transaction = new Transaction(
       new TransactionId(entity.id),
       MoneyMapper.toDomain(entity.amount),
-      new AccountId(entity.debtorAccontId),
-      new AccountId(entity.creditorAccountId)
+      new WalletId(entity.debtorWalletId),
+      new WalletId(entity.creditorWalletId)
     );
 
     return transaction;
