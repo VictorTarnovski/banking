@@ -10,33 +10,33 @@ import com.victor_tarnovski.banking.domain.ids.WalletId;
 public class Transaction {
   private final TransactionId id;
   private final Money amount;
-  private final WalletId debtorWalletId;
-  private final WalletId creditorWalletId;
+  private final WalletId fromWalletId;
+  private final WalletId toWalletId;
 
   public Transaction(
     final Money amount,
-    final WalletId debtorWalletId,
-    final WalletId creditorWalletId
+    final WalletId fromWalletId,
+    final WalletId toWalletId
   ) {
-    this(null, amount, debtorWalletId, creditorWalletId);
+    this(null, amount, fromWalletId, toWalletId);
   }
   
   public Transaction(
     final TransactionId id,
     final Money amount,
-    final WalletId debtorWalletId,
-    final WalletId creditorWalletId
+    final WalletId fromWalletId,
+    final WalletId toWalletId
   ) {
     this.id = id;
     
     Objects.requireNonNull(amount, "amount must not be null");
     this.amount = amount;
 
-    Objects.requireNonNull(debtorWalletId, "debtorWalletId must not be null");
-    this.debtorWalletId = debtorWalletId;
+    Objects.requireNonNull(fromWalletId, "fromWalletId must not be null");
+    this.fromWalletId = fromWalletId;
     
-    Objects.requireNonNull(creditorWalletId, "creditorWalletId must not be null");
-    this.creditorWalletId = creditorWalletId;
+    Objects.requireNonNull(toWalletId, "toWalletId must not be null");
+    this.toWalletId = toWalletId;
   }
 
   public TransactionId id() {
@@ -47,12 +47,12 @@ public class Transaction {
     return amount;
   }
   
-  public WalletId debtorWalletId() {
-    return debtorWalletId;
+  public WalletId fromWalletId() {
+    return fromWalletId;
   }
 
-  public WalletId creditorWalletId() {
-    return creditorWalletId;
+  public WalletId toWalletId() {
+    return toWalletId;
   }
 
 }

@@ -26,23 +26,23 @@ public class TransferFundsUseCase {
     this.transactionRepository = transactionRepository;
   }
 
-  public void execute(long transferAmount, WalletId debtorWalletId, WalletId creditorWalletId) {
-    var debtorWallet = walletRepository
-      .findById(debtorWalletId)
-      .orElseThrow(() -> new WalletNotFoundException(debtorWalletId)); 
+  public void execute(long transferAmount, WalletId fromWalletId, WalletId toWalletId) {
+    var fromWallet = walletRepository
+      .findById(fromWalletId)
+      .orElseThrow(() -> new WalletNotFoundException(fromWalletId)); 
 
-    var creditorWallet = walletRepository
-      .findById(creditorWalletId)
-      .orElseThrow(() -> new WalletNotFoundException(creditorWalletId)); 
+    var toWallet = walletRepository
+      .findById(toWalletId)
+      .orElseThrow(() -> new WalletNotFoundException(toWalletId)); 
    
     var transaction = transferService.transfer(
       transferAmount,
-      debtorWallet,
-      creditorWallet
+      fromWallet,
+      toWallet
     );
  
-    walletRepository.save(debtorWallet);
-    walletRepository.save(creditorWallet);
+    walletRepository.save(fromWallet);
+    walletRepository.save(toWallet);
     transactionRepository.save(transaction);
   }
 }

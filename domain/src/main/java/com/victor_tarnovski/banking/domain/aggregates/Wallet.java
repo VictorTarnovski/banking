@@ -83,10 +83,19 @@ public class Wallet {
     balance = balance.subtract(value);
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Wallet)) return false;
+    var wallet = (Wallet) o;
+    return Objects.equals(id, wallet.id);
+  }
+
   private void ensureGreaterThanOrEqualZero(Money value) {
     var zero = new Money(value.currency());
     if (!value.greaterThanOrEqual(zero)) {
       throw new IllegalArgumentException("value must be greater than zero");
     }
   }
+
 }

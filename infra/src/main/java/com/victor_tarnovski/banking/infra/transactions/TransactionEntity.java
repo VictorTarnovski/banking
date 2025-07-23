@@ -25,8 +25,8 @@ public class TransactionEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   public UUID id;
   public MoneyEntity amount;
-  @Column(name = "debtor_wallet_id")
-  public UUID debtorWalletId;
-  @Column(name = "creditor_wallet_id")
-  public UUID creditorWalletId; 
+  @Column(name = "from_wallet_id")
+  public UUID fromWalletId;
+  @Column(name = "to_wallet_id")
+  public UUID toWalletId; 
 }

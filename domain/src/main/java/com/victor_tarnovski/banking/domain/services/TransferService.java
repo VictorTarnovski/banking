@@ -13,19 +13,19 @@ import jakarta.inject.Named;
 public class TransferService {
   public Transaction transfer(
     final long transferAmount, 
-    final Wallet debtorWallet, 
-    final Wallet creditorWallet) {
-    if (debtorWallet.id().equals(creditorWallet.id()))
+    final Wallet fromWallet, 
+    final Wallet toWallet) {
+    if (fromWallet.equals(toWallet))
       throw new RecursiveTransferException();
 
-    var amountTransfered = new Money(transferAmount, debtorWallet.currency()); 
-    debtorWallet.withdraw(amountTransfered);
-    creditorWallet.deposit(amountTransfered);
+    var amountTransfered = new Money(transferAmount, fromWallet.currency()); 
+    fromWallet.withdraw(amountTransfered);
+    toWallet.deposit(amountTransfered);
 
     return new Transaction(
       amountTransfered, 
-      debtorWallet.id(), 
-      creditorWallet.id()
+      fromWallet, 
+      toWallet
     );
   }
 }
