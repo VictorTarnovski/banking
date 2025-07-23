@@ -31,12 +31,14 @@ public class Money implements Comparable<Money> {
   }
 
   public Money(BigDecimal amount, Currency currency) {
+    Objects.requireNonNull(amount, "amount must not be null");
+    this.amount = toLong(amount); 
+
     requireNonNullCurrency(currency);
     this.currency = currency;
-
-    this.amount = toLong(amount); 
   }
 
+  //region USD constructors
   public static Money dollars() {
     return new Money(Currency.getInstance("USD"));
   }
@@ -49,6 +51,8 @@ public class Money implements Comparable<Money> {
   public static Money dollars(BigDecimal amount) {
     return new Money(amount, Currency.getInstance("USD"));
   }
+  
+  //endregion
  
   //endregion
 
@@ -87,7 +91,7 @@ public class Money implements Comparable<Money> {
   }
 
   public Money negate() {
-    return newMoney(amount().multiply(new BigDecimal(-1)));
+    return newMoney(amount().negate());
   }
 
   public Money[] allocate(int n) {
@@ -113,6 +117,10 @@ public class Money implements Comparable<Money> {
       results[i].amount++;
     }
     return results;
+  }
+
+  public boolean greaterThan(long amount) {
+    return greaterThan(newMoney(amount));
   }
 
   public boolean greaterThan(Money other) {

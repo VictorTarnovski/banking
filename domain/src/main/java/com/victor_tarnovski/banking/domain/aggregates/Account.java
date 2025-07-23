@@ -33,7 +33,7 @@ public class Account {
     this.id = id;
 
     Objects.requireNonNull(currency, "currency must not be null");
-    var initialBalance = new Money(0, currency);
+    var initialBalance = new Money(currency);
     this.initialBalance = initialBalance;
     this.balance = initialBalance;
 
@@ -63,15 +63,25 @@ public class Account {
 
   public void credit(Money value) {
     Objects.requireNonNull(value, "value must not be null");
+    ensureGreaterThanZero(value);
+
     balance = balance.add(value);
   }
 
   public void debit(Money value) {
     Objects.requireNonNull(value, "value must not be null");
+    ensureGreaterThanZero(value);
+
     if (!balance.greaterThanOrEqual(value)) {
       throw new InsufficientBalanceException();
     }
 
     balance = balance.subtract(value);
+  }
+
+  private void ensureGreaterThanZero(Money value) {
+    if (!value.greaterThan(0)) {
+      throw new IllegalArgumentException("value must be greater than zero");
+    }
   }
 }
