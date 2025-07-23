@@ -62,10 +62,12 @@ public class Account {
   }
 
   public void credit(Money value) {
+    Objects.requireNonNull(value, "value must not be null");
     balance = balance.add(value);
   }
 
   public void debit(Money value) {
+    Objects.requireNonNull(value, "value must not be null");
     if (!balance.greaterThanOrEqual(value)) {
       throw new InsufficientBalanceException();
     }
