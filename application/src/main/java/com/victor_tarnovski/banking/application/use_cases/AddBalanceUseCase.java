@@ -21,7 +21,7 @@ public class AddBalanceUseCase {
     var wallet = walletRepository.findById(walletId)
       .orElseThrow(() -> new WalletNotFoundException(walletId));
 
-    wallet.credit(new Money(amount, wallet.currency()));
+    wallet.deposit(new Money(amount, wallet.currency()));
   
     walletRepository.save(wallet);
   }

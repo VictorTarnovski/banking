@@ -28,7 +28,7 @@ public class WalletMapper {
       new UserId(entity.id)
     );
 
-    wallet.credit(MoneyMapper.toDomain(entity.balance));
+    wallet.deposit(MoneyMapper.toDomain(entity.balance));
 
     return wallet;
   }

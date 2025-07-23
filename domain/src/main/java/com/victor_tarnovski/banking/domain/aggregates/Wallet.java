@@ -65,14 +65,14 @@ public class Wallet {
     return balance.currency();
   }
 
-  public void credit(Money value) {
+  public void deposit(Money value) {
     Objects.requireNonNull(value, "value must not be null");
     ensureGreaterThanOrEqualZero(value);
 
     balance = balance.add(value);
   }
 
-  public void debit(Money value) {
+  public void withdraw(Money value) {
     Objects.requireNonNull(value, "value must not be null");
     ensureGreaterThanOrEqualZero(value);
 

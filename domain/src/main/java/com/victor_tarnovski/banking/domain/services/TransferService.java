@@ -19,8 +19,8 @@ public class TransferService {
       throw new RecursiveTransferException();
 
     var amountTransfered = new Money(transferAmount, debtorWallet.currency()); 
-    debtorWallet.debit(amountTransfered);
-    creditorWallet.credit(amountTransfered);
+    debtorWallet.withdraw(amountTransfered);
+    creditorWallet.deposit(amountTransfered);
 
     return new Transaction(
       amountTransfered, 
