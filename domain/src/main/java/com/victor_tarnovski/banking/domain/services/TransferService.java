@@ -24,8 +24,8 @@ public class TransferService {
 
     return new Transaction(
       amountTransfered, 
-      fromWallet, 
-      toWallet
+      fromWallet.id(), 
+      toWallet.id()
     );
   }
 }
