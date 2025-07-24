@@ -3,7 +3,7 @@ package com.victor_tarnovski.banking.presentation.controllers;
 import java.util.Currency;
 import java.util.UUID;
 
-import com.victor_tarnovski.banking.application.use_cases.AddBalanceUseCase;
+import com.victor_tarnovski.banking.application.use_cases.DepositUseCase;
 import com.victor_tarnovski.banking.application.use_cases.CreateWalletUseCase;
 import com.victor_tarnovski.banking.domain.ids.WalletId;
 import com.victor_tarnovski.banking.domain.ids.UserId;
@@ -23,12 +23,12 @@ import jakarta.ws.rs.core.Response;
 @ApplicationScoped
 public class WalletController {
   private final CreateWalletUseCase createWalletUseCase;
-  private final AddBalanceUseCase addBalanceUseCase;
+  private final DepositUseCase addBalanceUseCase;
 
   @Inject
   WalletController(
     final CreateWalletUseCase createWalletUseCase,
-    final AddBalanceUseCase addBalanceUseCase
+    final DepositUseCase addBalanceUseCase
   ) {
     this.createWalletUseCase = createWalletUseCase;
     this.addBalanceUseCase = addBalanceUseCase;
@@ -44,8 +44,8 @@ public class WalletController {
   }
 
   @POST
-  @Path("/{walletId}/balance/{amount}")
-  public Response addBalance(
+  @Path("/{walletId}/deposit/{amount}")
+  public Response deposit(
     @PathParam("walletId")
     final UUID walletId,
     @PathParam("amount")
@@ -54,5 +54,4 @@ public class WalletController {
     addBalanceUseCase.execute(new WalletId(walletId), amount);
     return Response.ok().build();
   } 
-
 }

@@ -27,7 +27,13 @@ public class WalletGateway implements WalletRepository {
   @Override
   public Wallet save(final Wallet wallet) {
     var entity = mapper.toEntity(wallet);
-    repository.save(entity);
+
+    if(entity.id == null) {
+      repository.create(entity);
+      return mapper.toDomain(entity);
+    }
+
+    repository.update(entity);
     return mapper.toDomain(entity);
   }
 

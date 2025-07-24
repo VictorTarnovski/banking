@@ -1,4 +1,3 @@
-
 package com.victor_tarnovski.banking.domain.aggregates;
 
 import com.victor_tarnovski.banking.domain.exceptions.InsufficientBalanceException;
@@ -65,22 +64,22 @@ public class Wallet {
     return balance.currency();
   }
 
-  public void deposit(Money value) {
-    Objects.requireNonNull(value, "value must not be null");
-    ensureGreaterThanOrEqualZero(value);
+  public void deposit(Money depositAmount) {
+    Objects.requireNonNull(depositAmount, "value must not be null");
+    ensureGreaterThanOrEqualZero(depositAmount);
 
-    balance = balance.add(value);
+    balance = balance.add(depositAmount);
   }
 
-  public void withdraw(Money value) {
-    Objects.requireNonNull(value, "value must not be null");
-    ensureGreaterThanOrEqualZero(value);
+  public void withdraw(Money withdrawAmount) {
+    Objects.requireNonNull(withdrawAmount, "value must not be null");
+    ensureGreaterThanOrEqualZero(withdrawAmount);
 
-    if (!balance.greaterThanOrEqual(value)) {
+    if (!balance.greaterThanOrEqual(withdrawAmount)) {
       throw new InsufficientBalanceException();
     }
 
-    balance = balance.subtract(value);
+    balance = balance.subtract(withdrawAmount);
   }
 
   @Override
@@ -91,10 +90,10 @@ public class Wallet {
     return Objects.equals(id, wallet.id);
   }
 
-  private void ensureGreaterThanOrEqualZero(Money value) {
-    var zero = new Money(value.currency());
-    if (!value.greaterThanOrEqual(zero)) {
-      throw new IllegalArgumentException("value must be greater than zero");
+  private void ensureGreaterThanOrEqualZero(Money amount) {
+    var zero = new Money(amount.currency());
+    if (!amount.greaterThanOrEqual(zero)) {
+      throw new IllegalArgumentException("amount must be greater than zero");
     }
   }
 

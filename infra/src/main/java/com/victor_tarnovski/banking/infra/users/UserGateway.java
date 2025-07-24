@@ -29,7 +29,13 @@ public class UserGateway implements UserRepository {
   @Override
   public User save(final User user) {
     var entity = mapper.toEntity(user);
-    repository.save(entity);
+
+    if(entity.id == null) {
+      repository.create(entity);
+      return mapper.toDomain(entity);
+    }
+
+    repository.update(entity);
     return mapper.toDomain(entity);
   }
 

@@ -1,7 +1,7 @@
 package com.victor_tarnovski.banking.domain.services;
 
 import com.victor_tarnovski.banking.domain.aggregates.Wallet;
-import com.victor_tarnovski.banking.domain.aggregates.Transaction;
+import com.victor_tarnovski.banking.domain.aggregates.transactions.TransferTransaction;
 import com.victor_tarnovski.banking.domain.exceptions.RecursiveTransferException;
 import com.victor_tarnovski.banking.domain.vo.Money;
 
@@ -11,7 +11,7 @@ import jakarta.inject.Named;
 @Named
 @ApplicationScoped
 public class TransferService {
-  public Transaction transfer(
+  public TransferTransaction transfer(
     final long transferAmount, 
     final Wallet fromWallet, 
     final Wallet toWallet) {
@@ -22,7 +22,7 @@ public class TransferService {
     fromWallet.withdraw(amountTransfered);
     toWallet.deposit(amountTransfered);
 
-    return new Transaction(
+    return new TransferTransaction(
       amountTransfered, 
       fromWallet.id(), 
       toWallet.id()

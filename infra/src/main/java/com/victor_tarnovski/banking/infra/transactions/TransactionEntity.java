@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+import com.victor_tarnovski.banking.domain.aggregates.enums.TransactionType;
 import com.victor_tarnovski.banking.infra.value_objects.MoneyEntity;
 
 @Entity
@@ -29,4 +30,6 @@ public class TransactionEntity {
   public UUID fromWalletId;
   @Column(name = "to_wallet_id")
   public UUID toWalletId; 
+  @Column(name = "type")
+  public TransactionType type;
 }

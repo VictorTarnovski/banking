@@ -3,7 +3,6 @@ package com.victor_tarnovski.banking.infra;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 
 @Dependent
 public class EntityRepositoryBase<TEntity> {
@@ -18,9 +17,11 @@ public class EntityRepositoryBase<TEntity> {
     this.entityManager = entityManager;
   }
 
-  @Transactional
-  public void save(TEntity entity) {
-    entityManager.persist(entity);
+  public void create(TEntity entity) {
+    entityManager.merge(entity);
   }
 
+  public void update(TEntity entity) {
+    entityManager.merge(entity);
+  }
 }
