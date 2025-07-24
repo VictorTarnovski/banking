@@ -1,0 +1,21 @@
+meta {
+  name: transfer
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base_url}}/v1/wallets/:fromWalletId/transfer/:toWalletId/:amount
+  body: none
+  auth: inherit
+}
+
+params:path {
+  fromWalletId: 
+  toWalletId: 
+  amount: 
+}
+
+headers {
+  X-UserId: 
+}

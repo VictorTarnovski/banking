@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.victor_tarnovski.banking.application.use_cases.WithdrawUseCase;
 import com.victor_tarnovski.banking.application.use_cases.CreateWalletUseCase;
 import com.victor_tarnovski.banking.application.use_cases.DepositUseCase;
+import com.victor_tarnovski.banking.application.use_cases.TransferFundsUseCase;
 import com.victor_tarnovski.banking.domain.ids.WalletId;
 import com.victor_tarnovski.banking.domain.ids.UserId;
 
@@ -26,16 +27,19 @@ public class WalletController {
   private final CreateWalletUseCase createWalletUseCase;
   private final DepositUseCase depositUseCase;
   private final WithdrawUseCase withdrawUseCase;
+  private final TransferFundsUseCase transferFundsUseCase; 
 
   @Inject
   WalletController(
     final CreateWalletUseCase createWalletUseCase,
     final DepositUseCase depositUseCase,
-    final WithdrawUseCase withdrawUseCase 
+    final WithdrawUseCase withdrawUseCase,
+    final TransferFundsUseCase transferFundsUseCase 
   ) {
     this.createWalletUseCase = createWalletUseCase;
     this.depositUseCase = depositUseCase;
     this.withdrawUseCase = withdrawUseCase;
+    this.transferFundsUseCase = transferFundsUseCase;
   }
 
   @POST
@@ -68,6 +72,20 @@ public class WalletController {
     final long amount 
   ) {
     withdrawUseCase.execute(new WalletId(walletId), amount);
+    return Response.ok().build();
+  } 
+
+  @POST
+  @Path("/{fromWalletId}/transfer/{toWalletId}/{amount}")
+  public Response transfer(
+    @PathParam("fromWalletId")
+    final UUID fromWalletId,
+    @PathParam("toWalletId")
+    final UUID toWalletId,
+    @PathParam("amount")
+    final long amount 
+  ) {
+    transferFundsUseCase.execute(amount, new WalletId(fromWalletId), new WalletId(toWalletId));
     return Response.ok().build();
   } 
 }
