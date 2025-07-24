@@ -1,0 +1,20 @@
+meta {
+  name: withdraw
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base_url}}/v1/wallets/:id/withdraw/:amount
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 
+  amount: 
+}
+
+headers {
+  X-UserId: 
+}

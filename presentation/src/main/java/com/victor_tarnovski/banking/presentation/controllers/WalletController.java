@@ -3,8 +3,9 @@ package com.victor_tarnovski.banking.presentation.controllers;
 import java.util.Currency;
 import java.util.UUID;
 
-import com.victor_tarnovski.banking.application.use_cases.DepositUseCase;
+import com.victor_tarnovski.banking.application.use_cases.WithdrawUseCase;
 import com.victor_tarnovski.banking.application.use_cases.CreateWalletUseCase;
+import com.victor_tarnovski.banking.application.use_cases.DepositUseCase;
 import com.victor_tarnovski.banking.domain.ids.WalletId;
 import com.victor_tarnovski.banking.domain.ids.UserId;
 
@@ -23,15 +24,18 @@ import jakarta.ws.rs.core.Response;
 @ApplicationScoped
 public class WalletController {
   private final CreateWalletUseCase createWalletUseCase;
-  private final DepositUseCase addBalanceUseCase;
+  private final DepositUseCase depositUseCase;
+  private final WithdrawUseCase withdrawUseCase;
 
   @Inject
   WalletController(
     final CreateWalletUseCase createWalletUseCase,
-    final DepositUseCase addBalanceUseCase
+    final DepositUseCase depositUseCase,
+    final WithdrawUseCase withdrawUseCase 
   ) {
     this.createWalletUseCase = createWalletUseCase;
-    this.addBalanceUseCase = addBalanceUseCase;
+    this.depositUseCase = depositUseCase;
+    this.withdrawUseCase = withdrawUseCase;
   }
 
   @POST
@@ -51,7 +55,19 @@ public class WalletController {
     @PathParam("amount")
     final long amount 
   ) {
-    addBalanceUseCase.execute(new WalletId(walletId), amount);
+    depositUseCase.execute(new WalletId(walletId), amount);
+    return Response.ok().build();
+  } 
+
+  @POST
+  @Path("/{walletId}/withdraw/{amount}")
+  public Response withdraw(
+    @PathParam("walletId")
+    final UUID walletId,
+    @PathParam("amount")
+    final long amount 
+  ) {
+    withdrawUseCase.execute(new WalletId(walletId), amount);
     return Response.ok().build();
   } 
 }
