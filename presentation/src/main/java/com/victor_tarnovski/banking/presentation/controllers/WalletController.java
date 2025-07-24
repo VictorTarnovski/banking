@@ -35,7 +35,7 @@ public class WalletController {
   }
 
   @POST
-  public Response open(
+  public Response create(
     @HeaderParam("X-UserId")
     final UUID userId
   ) {
