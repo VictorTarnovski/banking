@@ -18,7 +18,7 @@ public class EntityRepositoryBase<TEntity> {
   }
 
   public void create(TEntity entity) {
-    entityManager.merge(entity);
+    entityManager.persist(entity);
   }
 
   public void update(TEntity entity) {
