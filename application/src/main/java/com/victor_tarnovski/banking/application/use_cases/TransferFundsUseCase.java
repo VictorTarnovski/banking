@@ -8,6 +8,7 @@ import com.victor_tarnovski.banking.domain.services.TransferService;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
+import jakarta.transaction.Transactional;
 
 @Named
 @ApplicationScoped
@@ -26,6 +27,7 @@ public class TransferFundsUseCase {
     this.transactionRepository = transactionRepository;
   }
 
+  @Transactional
   public void execute(long transferAmount, WalletId fromWalletId, WalletId toWalletId) {
     var fromWallet = walletRepository
       .findById(fromWalletId)

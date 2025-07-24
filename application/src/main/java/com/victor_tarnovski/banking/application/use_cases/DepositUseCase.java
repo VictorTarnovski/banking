@@ -10,6 +10,7 @@ import com.victor_tarnovski.banking.domain.vo.Money;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.transaction.Transactional;
 
 @Named
 @ApplicationScoped
@@ -26,6 +27,7 @@ public class DepositUseCase {
     this.transactionRepository = transactionRepository;
   }
 
+  @Transactional
   public void execute(final WalletId walletId, final long amount) {
     var wallet = walletRepository.findById(walletId)
       .orElseThrow(() -> new WalletNotFoundException(walletId));
