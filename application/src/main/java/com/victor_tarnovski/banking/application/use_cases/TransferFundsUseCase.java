@@ -45,6 +45,6 @@ public class TransferFundsUseCase {
  
     walletRepository.save(fromWallet);
     walletRepository.save(toWallet);
-    transactionRepository.save(transaction);
+    transactionRepository.create(transaction);
   }
 }

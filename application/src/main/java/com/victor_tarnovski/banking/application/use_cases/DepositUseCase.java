@@ -38,6 +38,6 @@ public class DepositUseCase {
     var transaction = new DepositTransaction(deposit, wallet.id());
 
     walletRepository.save(wallet);
-    transactionRepository.save(transaction);
+    transactionRepository.create(transaction);
   }
 }
