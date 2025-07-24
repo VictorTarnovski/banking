@@ -18,20 +18,17 @@ public class Money implements Comparable<Money> {
     this(0L, currency);
   }
 
-  public Money(long amount, Currency currency) {
-    this.amount = amount;
-
-    requireNonNullCurrency(currency);
-    this.currency = currency;
-  }
-
   public Money(double amount, Currency currency) {
     this(new BigDecimal(amount), currency);
   }
 
   public Money(BigDecimal amount, Currency currency) {
+    this(toLong(amount, currency), currency);
+  }
+
+  public Money(long amount, Currency currency) {
     Objects.requireNonNull(amount, "amount must not be null");
-    this.amount = toLong(amount); 
+    this.amount = amount;
 
     requireNonNullCurrency(currency);
     this.currency = currency;
@@ -172,10 +169,11 @@ public class Money implements Comparable<Money> {
   }
 
   private static int centFactor(Currency currency) {
+    requireNonNullCurrency(currency);
     return cents[currency.getDefaultFractionDigits()];
   }
 
-  private void requireNonNullCurrency(Currency currency) {
+  private static void requireNonNullCurrency(Currency currency) {
     Objects.requireNonNull(currency, CURRENCY_MUST_NOT_BE_NULL);
   }
 
