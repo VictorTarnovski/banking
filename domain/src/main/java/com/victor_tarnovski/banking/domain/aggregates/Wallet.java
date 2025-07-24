@@ -26,7 +26,6 @@ public class Wallet {
     );
   }
 
-
   public Wallet(
     WalletId id,
     Currency currency,
@@ -65,14 +64,14 @@ public class Wallet {
   }
 
   public void deposit(Money depositAmount) {
-    Objects.requireNonNull(depositAmount, "value must not be null");
+    Objects.requireNonNull(depositAmount, "depositAmount must not be null");
     ensureGreaterThanOrEqualZero(depositAmount);
 
     balance = balance.add(depositAmount);
   }
 
   public void withdraw(Money withdrawAmount) {
-    Objects.requireNonNull(withdrawAmount, "value must not be null");
+    Objects.requireNonNull(withdrawAmount, "withdrawAmount must not be null");
     ensureGreaterThanOrEqualZero(withdrawAmount);
 
     if (!balance.greaterThanOrEqual(withdrawAmount)) {
