@@ -30,6 +30,7 @@ public class TransactionMapper {
       .amount(MoneyMapper.toEntity(transaction.amount()))
       .fromWalletId(fromWalletId)
       .toWalletId(toWalletId)
+      .type(transaction.type())
       .build();
   }
 
