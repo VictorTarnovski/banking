@@ -13,7 +13,7 @@ public class WithdrawTransaction extends Transaction {
     Money amount, 
     WalletId fromWalletId 
   ) {
-    super(id, amount, fromWalletId, null, TransactionType.TRANSFER);
+    super(id, amount, fromWalletId, null, TransactionType.WITHDRAW);
     requireNonNullFromWalletId(fromWalletId);
   }
   

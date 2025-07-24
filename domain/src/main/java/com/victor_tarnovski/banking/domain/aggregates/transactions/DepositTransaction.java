@@ -13,7 +13,7 @@ public class DepositTransaction extends Transaction {
     Money amount, 
     WalletId toWalletId 
   ) {
-    super(id, amount, null, toWalletId, TransactionType.TRANSFER);
+    super(id, amount, null, toWalletId, TransactionType.DEPOSIT);
     requireNonNullToWalletId(toWalletId);
   }
   

@@ -13,6 +13,8 @@ public class TransferTransaction extends Transaction {
     WalletId toWalletId
   ) {
     super(id, amount, fromWalletId, toWalletId, TransactionType.TRANSFER);
+    requireNonNullFromWalletId(fromWalletId);
+    requireNonNullToWalletId(toWalletId);
   }
   
   public TransferTransaction(
@@ -20,9 +22,7 @@ public class TransferTransaction extends Transaction {
     WalletId fromWalletId, 
     WalletId toWalletId
   ) {
-    super(amount, fromWalletId, toWalletId, TransactionType.TRANSFER);
-    requireNonNullFromWalletId(fromWalletId);
-    requireNonNullToWalletId(toWalletId);
+    this(null, amount, fromWalletId, toWalletId);
   }
   
   public WalletId fromWalletId() {
