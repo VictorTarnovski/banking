@@ -18,24 +18,7 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
-    networks:
-      - network
     volumes:
       - postgres_volume:/var/lib/postgresql/data
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: banking-pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
-      PGADMIN_DEFAULT_PASSWORD: "admin"
-    ports:
-      - "80:80"
-    depends_on:
-      - postgres
-    networks:
-      - network
-networks:
-  network:
-    driver: bridge
 volumes:
   postgres_volume:
