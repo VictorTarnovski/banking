@@ -13,6 +13,7 @@ import com.victor_tarnovski.banking.domain.ids.UserId;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.transaction.Transactional;
 
 @Named
 @ApplicationScoped
@@ -29,6 +30,7 @@ public class CreateWalletUseCase {
     this.walletRepository = walletRepository;
   }
 
+  @Transactional
   public void execute(Currency currency, UserId userId) {
     User user = userRepository.findById(userId)
       .orElseThrow(() -> new UserNotFoundException(userId));

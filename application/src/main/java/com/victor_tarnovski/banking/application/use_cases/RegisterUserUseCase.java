@@ -9,6 +9,7 @@ import com.victor_tarnovski.banking.domain.vo.Email;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.transaction.Transactional;
 
 @Named
 @ApplicationScoped
@@ -19,7 +20,8 @@ public class RegisterUserUseCase {
   public RegisterUserUseCase(UserRepository repository) {
     this.repository = repository;
   }
-  
+ 
+  @Transactional
   public void execute(RegisterUserDTO dto) {
     var existing = repository.findByEmail(new Email(dto.email()));
     if(existing.isPresent())
