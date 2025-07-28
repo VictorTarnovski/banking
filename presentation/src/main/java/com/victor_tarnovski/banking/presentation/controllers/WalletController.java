@@ -8,6 +8,7 @@ import com.victor_tarnovski.banking.application.use_cases.CreateWalletUseCase;
 import com.victor_tarnovski.banking.application.use_cases.DepositUseCase;
 import com.victor_tarnovski.banking.application.use_cases.TransferFundsUseCase;
 import com.victor_tarnovski.banking.domain.ids.WalletId;
+import com.victor_tarnovski.banking.presentation.Problem;
 import com.victor_tarnovski.banking.domain.ids.UserId;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -45,10 +46,24 @@ public class WalletController {
   @POST
   public Response create(
     @HeaderParam("X-UserId")
-    final UUID userId
+    final UUID userId,
+    @HeaderParam("X-Currency")
+    final String currencyCode
   ) {
-    createWalletUseCase.execute(Currency.getInstance("USD"), new UserId(userId));
-    return Response.ok().build();
+    try {
+      final Currency currency = Currency.getInstance(currencyCode);
+      createWalletUseCase.execute(currency, new UserId(userId));
+      return Response.ok().build();
+    } catch (NullPointerException | IllegalArgumentException e) {
+      var problem = new Problem(
+        "invalid currency code",
+        Response.Status.BAD_REQUEST.getStatusCode());
+
+      return Response.status(problem.status())
+        .entity(problem)
+        .type(MediaType.APPLICATION_JSON)
+        .build();
+    }
   }
 
   @POST
