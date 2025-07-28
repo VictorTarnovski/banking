@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-import com.victor_tarnovski.banking.domain.aggregates.enums.TransactionType;
+import com.victor_tarnovski.banking.domain.enums.TransactionType;
 import com.victor_tarnovski.banking.infra.value_objects.MoneyEntity;
 
 @Entity

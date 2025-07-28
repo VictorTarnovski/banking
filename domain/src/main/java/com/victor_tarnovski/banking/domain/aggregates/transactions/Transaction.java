@@ -1,6 +1,6 @@
 package com.victor_tarnovski.banking.domain.aggregates.transactions;
 
-import com.victor_tarnovski.banking.domain.aggregates.enums.TransactionType;
+import com.victor_tarnovski.banking.domain.enums.TransactionType;
 import com.victor_tarnovski.banking.domain.ids.TransactionId;
 import com.victor_tarnovski.banking.domain.vo.Money;
 
