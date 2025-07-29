@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Password implements Comparable<Password> {
   private String salt;
-  private String value;
+  private String hash;
 
   public Password(String input) {
     this(genSalt(), input);
@@ -20,20 +20,20 @@ public class Password implements Comparable<Password> {
     Objects.requireNonNull(input, "input must not be null");
     if(input.isBlank())
       throw new IllegalArgumentException("input cannot be blank");
-    this.value = toHex(hash(input));
+    this.hash = toHex(hash(salt, input));
   }
 
   public String salt() {
     return salt;
   }
 
-  public String value() {
-    return value;
+  public String hash() {
+    return hash;
   }
 
   @Override
   public int compareTo(Password other) {
-    return value.compareTo(other.value) + salt.compareTo(other.salt);
+    return hash.compareTo(other.hash);
   }
 
   @Override
@@ -51,7 +51,7 @@ public class Password implements Comparable<Password> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(salt, value);
+    return Objects.hash(salt, hash);
   }
 
   private static String genSalt() {
@@ -60,10 +60,12 @@ public class Password implements Comparable<Password> {
     return Base64.getEncoder().encodeToString(bytes);
   }
 
-  private byte[] hash(String input) {
+  private byte[] hash(String salt, String input) {
     try {
+      var in = salt + input;
       var algorithm = MessageDigest.getInstance("SHA-256");
-      return algorithm.digest(input.getBytes("UTF-8"));
+      var out = algorithm.digest(in.getBytes("UTF-8"));
+      return out;
     } catch (Exception e) {
       throw new RuntimeException("cannot hash password", e);
     }

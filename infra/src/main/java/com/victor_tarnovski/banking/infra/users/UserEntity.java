@@ -30,6 +30,6 @@ public class UserEntity {
   public String email;
   @Column(name = "password_salt")
   public String passwordSalt;
-  @Column(name = "password_value")
-  public String passwordValue;
+  @Column(name = "password_hash")
+  public String passwordHash;
 }

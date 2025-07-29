@@ -17,7 +17,7 @@ public class UserMapper {
 
   public UserEntity toEntity(final User user) {
     var passwordSalt = getPasswordSalt(user);
-    var passwordValue = getPasswordValue(user);
+    var passwordHash = getPasswordHash(user);
 
     var id = user.id() != null ? user.id().value() : null;
     return UserEntity.builder()
@@ -26,7 +26,7 @@ public class UserMapper {
         .document(user.document())
         .email(user.email())
         .passwordSalt(passwordSalt)
-        .passwordValue(passwordValue)
+        .passwordHash(passwordHash)
         .build();
   }
 
@@ -65,7 +65,7 @@ public class UserMapper {
     }
   }
 
-  private String getPasswordValue(final User user) {
+  private String getPasswordHash(final User user) {
     try {
       Field passwordField = User.class.getDeclaredField("password");
 
@@ -73,16 +73,16 @@ public class UserMapper {
 
       var password = (Password) passwordField.get(user);
 
-      Field valueField = Password.class.getDeclaredField("value");
-      valueField.setAccessible(true);
-      var value = valueField.get(password);
-      valueField.setAccessible(false);
+      Field hashField = Password.class.getDeclaredField("hash");
+      hashField.setAccessible(true);
+      var hash = hashField.get(password);
+      hashField.setAccessible(false);
 
-      return (String) value;
+      return (String) hash;
 
     } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
       e.printStackTrace();
-      throw new InfraException("there was a error getting the password value for User#" + user.id());
+      throw new InfraException("there was a error getting the password hash for User#" + user.id());
     }
   }
 
@@ -99,10 +99,10 @@ public class UserMapper {
       saltField.set(password, entity.passwordSalt);
       saltField.setAccessible(false);
 
-      Field valueField = Password.class.getDeclaredField("value");
-      valueField.setAccessible(true);
-      valueField.set(password, entity.passwordValue);
-      valueField.setAccessible(false);
+      Field hashField = Password.class.getDeclaredField("hash");
+      hashField.setAccessible(true);
+      hashField.set(password, entity.passwordHash);
+      hashField.setAccessible(false);
 
     } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
       e.printStackTrace();
