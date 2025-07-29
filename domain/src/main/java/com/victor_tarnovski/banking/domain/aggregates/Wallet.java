@@ -8,7 +8,7 @@ import com.victor_tarnovski.banking.domain.vo.Money;
 import java.util.Currency;
 import java.util.Objects;
 
-public class Wallet {
+public class Wallet implements Comparable<Wallet> {
   private final WalletId id;
   private final Money initialBalance;
   private Money balance;
@@ -86,7 +86,12 @@ public class Wallet {
     if (this == o) return true;
     if (!(o instanceof Wallet)) return false;
     var wallet = (Wallet) o;
-    return Objects.equals(id, wallet.id);
+    return compareTo(wallet) == 0;
+  }
+
+  @Override
+  public int compareTo(Wallet o) {
+    return o.id().value().compareTo(this.id().value());
   }
 
   private void ensureGreaterThanOrEqualZero(Money amount) {
