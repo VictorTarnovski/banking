@@ -33,7 +33,7 @@ public class TransferAuthorizerAdapter implements TransferAuthorizer {
     log.info(request.toString());
 
     try {
-      HttpResponse<String> response= client.send(request, BodyHandlers.ofString());
+      HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
       log.info(response.toString());
       log.info(response.body());
       if(response.statusCode() != 200) {
