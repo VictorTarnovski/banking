@@ -13,11 +13,11 @@ import com.victor_tarnovski.banking.domain.aggregates.Wallet;
 import com.victor_tarnovski.banking.domain.ports.TransferAuthorizer;
 import com.victor_tarnovski.banking.domain.vo.Money;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
+import jakarta.inject.Singleton;
 
 @Named
-@ApplicationScoped
+@Singleton
 public class TransferAuthorizerCircuitBreaker implements TransferAuthorizer {
   private long fails = 0;
   private final long maxFails = 3;
@@ -104,7 +104,7 @@ public class TransferAuthorizerCircuitBreaker implements TransferAuthorizer {
     CircuitBreakerState currState,
     Level level
   ) {
-    var message = String.format("TransferAuthorizerCircuitBreaker state changed from {} to {}", prevState, currState);
+    var message = String.format("TransferAuthorizerCircuitBreaker state changed from %s to %s", prevState, currState);
     log.makeLoggingEventBuilder(level)
       .setMessage(message)
       .log();
