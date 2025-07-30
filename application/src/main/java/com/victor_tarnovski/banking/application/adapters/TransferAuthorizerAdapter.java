@@ -13,11 +13,6 @@ import com.victor_tarnovski.banking.domain.aggregates.Wallet;
 import com.victor_tarnovski.banking.domain.ports.TransferAuthorizer;
 import com.victor_tarnovski.banking.domain.vo.Money;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Named;
-
-@Named
-@ApplicationScoped
 public class TransferAuthorizerAdapter implements TransferAuthorizer {
   @Override
   public void authorize(Wallet fromWallet, Wallet toWallet, Money amount) {
@@ -36,7 +31,6 @@ public class TransferAuthorizerAdapter implements TransferAuthorizer {
         throw new UnauthorizedTransferException();
       }
     } catch (IOException | InterruptedException e) {
-      e.printStackTrace();
       throw new UnauthorizedTransferException(e);
     }
   }
