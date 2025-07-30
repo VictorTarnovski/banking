@@ -35,12 +35,12 @@ public class TransferAuthorizerCircuitBreaker implements TransferAuthorizer {
     CircuitBreakerState prevState = null;
 
     if (state == CircuitBreakerState.OPEN) {
-      fails++;
       if ((fails % retryAfterEach) == 0) {
         prevState = state;
         state = CircuitBreakerState.HALF_OPEN;
         logStateChange(prevState, state, Level.INFO);
       } else {
+        fails++;
         throw new UnauthorizedTransferException(
           new Throwable("circuit breaker is open, cannot authorize transfer")
         );
