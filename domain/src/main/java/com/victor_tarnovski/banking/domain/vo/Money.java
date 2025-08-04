@@ -33,22 +33,6 @@ public class Money implements Comparable<Money> {
     requireNonNullCurrency(currency);
     this.currency = currency;
   }
-
-  //region USD constructors
-  public static Money dollars() {
-    return new Money(Currency.getInstance("USD"));
-  }
-  public static Money dollars(long amount) {
-    return new Money(amount, Currency.getInstance("USD"));
-  }
-  public static Money dollars(double amount) {
-    return new Money(amount, Currency.getInstance("USD"));
-  }
-  public static Money dollars(BigDecimal amount) {
-    return new Money(amount, Currency.getInstance("USD"));
-  }
-  
-  //endregion
  
   //endregion
 
@@ -66,22 +50,22 @@ public class Money implements Comparable<Money> {
   //region public methods
   public Money add(Money augend) {
     assertSameCurrencyAs(augend);
-    return newMoney(amount().add(augend.amount()));
+    return newMoney(amount + augend.amount);
   }
 
   public Money subtract(Money subtrahend) {
     assertSameCurrencyAs(subtrahend);
-    return newMoney(amount().subtract(subtrahend.amount()));
+    return newMoney(amount - subtrahend.amount);
   }
   
   public Money multiply(Money multiplicand) {
     assertSameCurrencyAs(multiplicand);
-    return newMoney(amount().multiply(multiplicand.amount()));
+    return newMoney(amount * multiplicand.amount);
   }
 
   public Money divide(Money divisor) {
     assertSameCurrencyAs(divisor);
-    return newMoney(amount().divide(divisor.amount()));
+    return newMoney(amount / divisor.amount);
   }
 
   public Money[] allocate(int n) {
@@ -161,10 +145,6 @@ public class Money implements Comparable<Money> {
 
   //region private methods
   private Money newMoney(long amount) {
-    return new Money(amount, currency);
-  }
-
-  private Money newMoney(BigDecimal amount) {
     return new Money(amount, currency);
   }
 
