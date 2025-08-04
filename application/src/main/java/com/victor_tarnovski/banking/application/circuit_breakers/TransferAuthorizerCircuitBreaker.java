@@ -1,7 +1,5 @@
 package com.victor_tarnovski.banking.application.circuit_breakers;
 
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
@@ -9,7 +7,6 @@ import org.slf4j.event.Level;
 import com.victor_tarnovski.banking.application.adapters.TransferAuthorizerAdapter;
 import com.victor_tarnovski.banking.application.enums.CircuitBreakerState;
 import com.victor_tarnovski.banking.domain.aggregates.Wallet;
-import com.victor_tarnovski.banking.domain.exceptions.UnauthorizedTransferException;
 import com.victor_tarnovski.banking.domain.ports.TransferAuthorizer;
 import com.victor_tarnovski.banking.domain.vo.Money;
 
@@ -27,87 +24,66 @@ public class TransferAuthorizerCircuitBreaker implements TransferAuthorizer {
   private static final Logger log = LoggerFactory.getLogger(TransferAuthorizerCircuitBreaker.class);
 
   public TransferAuthorizerCircuitBreaker() {
-    log.info("TransferAuthorizerCircuitBreaker initialized with state: {}", state);
-  }
-  
-  @Override
-  public void authorize(Wallet fromWallet, Wallet toWallet, Money amount) {
-    CircuitBreakerState prevState = null;
-
-    if (state == CircuitBreakerState.OPEN) {
-      if ((fails % retryAfterEach) == 0) {
-        prevState = state;
-        state = CircuitBreakerState.HALF_OPEN;
-        logStateChange(prevState, state, Level.INFO);
-      } else {
-        fails++;
-        throw new UnauthorizedTransferException(
-          new Throwable("circuit breaker is open, cannot authorize transfer")
-        );
-      }
-    }
-
-    if (state == CircuitBreakerState.HALF_OPEN) { 
-      try {
-        checkAuthorization(fromWallet, toWallet, amount);
-        prevState = state;
-        state = CircuitBreakerState.CLOSED; 
-        logStateChange(prevState, state, Level.INFO);
-        fails = 0; 
-        return;
-      } catch (UnauthorizedTransferException e) {
-        var cause = e.getCause();
-        if (
-          cause instanceof IOException ||
-          cause instanceof InterruptedException
-        ) {
-          fails++;
-          if (fails == maxFails) {
-            prevState = state;
-            state = CircuitBreakerState.OPEN;
-            logStateChange(prevState, state, Level.WARN);
-          }
-          throw e;
-        }
-      }
-    }
-
-    if (state == CircuitBreakerState.CLOSED) {
-      try {
-        checkAuthorization(fromWallet, toWallet, amount);
-      } catch (UnauthorizedTransferException e) {
-        var cause = e.getCause();
-        if (
-          cause instanceof IOException ||
-          cause instanceof InterruptedException
-        ) {
-          fails++;
-          if (fails == maxFails) {
-            prevState = state;
-            state = CircuitBreakerState.OPEN;
-            logStateChange(prevState, state, Level.WARN);
-          }
-          throw e;
-        }
-      }
-    }
-
+    log.info("{} initialized with state: {}", getClass().getSimpleName(), state); 
   }
 
-  private void checkAuthorization(Wallet fromWallet, Wallet toWallet, Money amount) {
-    var authorizer = new TransferAuthorizerAdapter();
-    authorizer.authorize(fromWallet, toWallet, amount);
-  }
+  public void setState(CircuitBreakerState state) {
+    var level = Level.INFO;
+    
+    if (state == CircuitBreakerState.OPEN)
+      level = Level.WARN;
 
-  private void logStateChange(
-    CircuitBreakerState prevState, 
-    CircuitBreakerState currState,
-    Level level
-  ) {
-    var message = String.format("TransferAuthorizerCircuitBreaker state changed from %s to %s", prevState, currState);
+    var message = String.format("%s state changed from %s to %s", getClass().getSimpleName(), this.state, state);
     log.makeLoggingEventBuilder(level)
       .setMessage(message)
       .log();
+
+    this.state = state;
+  }
+
+  public void incrementFails() {
+    fails++;
+  }
+
+  public void resetFails() {
+    fails = 0;
+  }
+
+  public boolean shouldRetry() {
+    return (fails % retryAfterEach) == 0;
+  }
+
+  public boolean maxFailsReached() {
+    return fails == maxFails;
+  }
+
+  @Override
+  public void authorize(Wallet fromWallet, Wallet toWallet, Money amount) {
+    TransferAuthorizerCircuitBreakerState st =  null;
+
+    switch (state) {
+      case OPEN: 
+        st = new TransferAuthorizerCircuitBreakerOpenState();
+        st.execute(this, fromWallet, toWallet, amount);
+      
+      case HALF_OPEN:
+        st = new TransferAuthorizerCircuitBreakerHalfOpenState();
+        st.execute(this, fromWallet, toWallet, amount);  
+        break;
+
+      case CLOSED:
+        st = new TransferAuthorizerCircuitBreakerClosedState();
+        st.execute(this, fromWallet, toWallet, amount);
+        break;
+
+      default:
+        break;
+    }
   } 
+
+  void checkAuthorization(Wallet fromWallet, Wallet toWallet, Money amount) {
+    var authorizer = new TransferAuthorizerAdapter();
+    authorizer.authorize(fromWallet, toWallet, amount);
+  }
 
 }
