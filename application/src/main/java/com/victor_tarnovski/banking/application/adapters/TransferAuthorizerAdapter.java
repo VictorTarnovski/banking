@@ -10,8 +10,8 @@ import java.net.http.HttpResponse.BodyHandlers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.victor_tarnovski.banking.application.exceptions.UnauthorizedTransferException;
 import com.victor_tarnovski.banking.domain.aggregates.Wallet;
+import com.victor_tarnovski.banking.domain.exceptions.UnauthorizedTransferException;
 import com.victor_tarnovski.banking.domain.ports.TransferAuthorizer;
 import com.victor_tarnovski.banking.domain.vo.Money;
 

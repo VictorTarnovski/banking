@@ -1,6 +1,6 @@
 package com.victor_tarnovski.banking.presentation.exception_mappers;
 
-import com.victor_tarnovski.banking.application.exceptions.UnauthorizedTransferException;
+import com.victor_tarnovski.banking.domain.exceptions.UnauthorizedTransferException;
 import com.victor_tarnovski.banking.presentation.Problem;
 
 import jakarta.ws.rs.core.MediaType;

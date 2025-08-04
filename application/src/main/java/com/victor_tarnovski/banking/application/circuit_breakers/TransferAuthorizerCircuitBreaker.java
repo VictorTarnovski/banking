@@ -8,8 +8,8 @@ import org.slf4j.event.Level;
 
 import com.victor_tarnovski.banking.application.adapters.TransferAuthorizerAdapter;
 import com.victor_tarnovski.banking.application.enums.CircuitBreakerState;
-import com.victor_tarnovski.banking.application.exceptions.UnauthorizedTransferException;
 import com.victor_tarnovski.banking.domain.aggregates.Wallet;
+import com.victor_tarnovski.banking.domain.exceptions.UnauthorizedTransferException;
 import com.victor_tarnovski.banking.domain.ports.TransferAuthorizer;
 import com.victor_tarnovski.banking.domain.vo.Money;
 

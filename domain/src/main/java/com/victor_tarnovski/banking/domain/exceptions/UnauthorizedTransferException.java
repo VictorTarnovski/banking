@@ -1,6 +1,6 @@
-package com.victor_tarnovski.banking.application.exceptions;
+package com.victor_tarnovski.banking.domain.exceptions;
 
-public class UnauthorizedTransferException extends ApplicationException {
+public class UnauthorizedTransferException extends  DomainException {
   private static final String UNAUTHORIZED_TRANSFER = "unauthorized transfer";
 
   public UnauthorizedTransferException() {

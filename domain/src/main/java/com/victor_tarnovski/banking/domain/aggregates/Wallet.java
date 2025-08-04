@@ -97,7 +97,7 @@ public class Wallet implements Comparable<Wallet> {
   private void ensureGreaterThanOrEqualZero(Money amount) {
     var zero = new Money(amount.currency());
     if (!amount.greaterThanOrEqual(zero)) {
-      throw new IllegalArgumentException("amount must be greater than zero");
+      throw new IllegalArgumentException("amount must be greater than or equal to zero");
     }
   }
 

@@ -23,7 +23,8 @@ public class TransferService {
   public TransferTransaction transfer(
     final long transferAmount, 
     final Wallet fromWallet, 
-    final Wallet toWallet) {
+    final Wallet toWallet
+  ) {
     if (fromWallet.equals(toWallet))
       throw new RecursiveTransferException();
 
