@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import com.victor_tarnovski.banking.domain.aggregates.Wallet;
+import com.victor_tarnovski.banking.domain.events.TransferReceivedEvent;
 import com.victor_tarnovski.banking.domain.exceptions.RecursiveTransferException;
 import com.victor_tarnovski.banking.domain.exceptions.UnauthorizedTransferException;
 import com.victor_tarnovski.banking.domain.ids.UserId;
@@ -19,13 +20,18 @@ import com.victor_tarnovski.banking.domain.ids.WalletId;
 import com.victor_tarnovski.banking.domain.ports.TransferAuthorizer;
 import com.victor_tarnovski.banking.domain.vo.Money;
 
+import jakarta.enterprise.event.Event;
+import jakarta.enterprise.inject.se.SeContainer;
+import jakarta.enterprise.inject.se.SeContainerInitializer;
+import jakarta.enterprise.util.TypeLiteral;
+
 class TransferServiceTest {
-    class AuthorizedTransferAuthorizer implements TransferAuthorizer {
+    private static class AuthorizedTransferAuthorizer implements TransferAuthorizer {
         @Override
         public void authorize(Wallet fromWallet, Wallet toWallet, Money amount) {}
     }
 
-    class UnauthorizedTransferAuthorizer implements TransferAuthorizer {
+    private static class UnauthorizedTransferAuthorizer implements TransferAuthorizer {
         @Override
         public void authorize(Wallet fromWallet, Wallet toWallet, Money amount) {
             throw new UnauthorizedTransferException();
@@ -64,16 +70,27 @@ class TransferServiceTest {
         var toWallet = given_a_wallet(currency, toUserId);
 
         var authorizer = new UnauthorizedTransferAuthorizer();
-        var sut = new TransferService(authorizer);
 
-        // Then
-        assertThrows(
-            UnauthorizedTransferException.class, 
-            () -> {
-                // When
-                sut.transfer(transferAmount, fromWallet, toWallet);
-            }
-        );
+        try(SeContainer container = SeContainerInitializer.newInstance()
+            .disableDiscovery()
+            .addBeanClasses(
+                TransferReceivedEvent.class
+            )
+            .initialize()
+           ) {
+            var events = container.select(new TypeLiteral<Event<TransferReceivedEvent>>() {}).get();
+
+            var sut = new TransferService(authorizer, events);
+
+            // Then
+            assertThrows(
+                UnauthorizedTransferException.class,
+                () -> {
+                    // When
+                    sut.transfer(transferAmount, fromWallet, toWallet);
+                }
+            );
+        }
     }
 
     @ParameterizedTest
@@ -90,16 +107,27 @@ class TransferServiceTest {
         var toUserId = new UserId(UUID.randomUUID());
         var toWallet = given_a_wallet(currency, toUserId);
 
-        var authorizer = new AuthorizedTransferAuthorizer();
-        var sut = new TransferService(authorizer);
+        var authorizer = new AuthorizedTransferAuthorizer(); 
+        
+        try(SeContainer container = SeContainerInitializer.newInstance()
+            .disableDiscovery()
+            .addBeanClasses(
+                TransferReceivedEvent.class
+            )
+            .initialize()
+           ) {
+            var events = container.select(new TypeLiteral<Event<TransferReceivedEvent>>() {}).get();
 
-        // When  
-        var tx = sut.transfer(transferAmount, fromWallet, toWallet);
+            var sut = new TransferService(authorizer, events);
 
-        // Then 
-        assertEquals(new Money(transferAmount, currency), tx.amount());
-        assertEquals(tx.fromWalletId(), fromWallet.id());
-        assertEquals(tx.toWalletId(), toWallet.id());
+            // When
+            var tx = sut.transfer(transferAmount, fromWallet, toWallet);
+
+            // Then
+            assertEquals(new Money(transferAmount, currency), tx.amount());
+            assertEquals(tx.fromWalletId(), fromWallet.id());
+            assertEquals(tx.toWalletId(), toWallet.id());
+        }
     }
 
     @ParameterizedTest
@@ -114,16 +142,27 @@ class TransferServiceTest {
         wallet.deposit(new Money(transferAmount, currency));
 
         var authorizer = new AuthorizedTransferAuthorizer();
-        var sut = new TransferService(authorizer);
 
-        // Then 
-        assertThrows(
-            RecursiveTransferException.class,
-            () -> {
-                // When
-                sut.transfer(transferAmount, wallet, wallet);
-            }
-        );
+        try(SeContainer container = SeContainerInitializer.newInstance()
+            .disableDiscovery()
+            .addBeanClasses(
+                TransferReceivedEvent.class
+            )
+            .initialize()
+           ) {
+            var events = container.select(new TypeLiteral<Event<TransferReceivedEvent>>() {}).get();
+
+            var sut = new TransferService(authorizer, events);
+
+            // Then
+            assertThrows(
+                RecursiveTransferException.class,
+                () -> {
+                    // When
+                    sut.transfer(transferAmount, wallet, wallet);
+                }
+            );
+        }
     }
 
 }
