@@ -1,10 +1,11 @@
 package com.victor_tarnovski.banking.domain.vo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Objects;
 
-public class Money implements Comparable<Money> {
+public class Money implements Comparable<Money>, Serializable {
   //region fields
   private long amount;
   private Currency currency;
