@@ -66,10 +66,13 @@ class MoneyTest {
         var currency = Currency.getInstance("JPY");
 
         // Then
-        assertThrows(ArithmeticException.class, () -> {
-            // When
-            new Money(value, currency);
-        });
+        assertThrows(
+            ArithmeticException.class, 
+            () -> {
+                // When
+                new Money(value, currency);
+            }
+        );
     }
 
     @ParameterizedTest
@@ -247,9 +250,12 @@ class MoneyTest {
         var value = new BigDecimal("123.45");
 
         // Then
-        assertThrows(ArithmeticException.class, () -> {
-            // When
-            money.toLong(value);
-        });
+        assertThrows(
+            ArithmeticException.class, 
+            () -> {
+                // When
+                money.toLong(value);
+            }
+        );
     }
 }

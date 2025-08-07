@@ -66,7 +66,13 @@ class WalletTest {
         Wallet wallet = givenWallet(100, currency);
         Money withdrawAmount = new Money(200, currency);
 
-        // When & Then
-        assertThrows(InsufficientBalanceException.class, () -> wallet.withdraw(withdrawAmount));
+        // Then 
+        assertThrows(
+            InsufficientBalanceException.class, 
+            () -> {
+                // When
+                wallet.withdraw(withdrawAmount);
+            }
+        );
     }
 }

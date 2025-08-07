@@ -67,10 +67,13 @@ class TransferServiceTest {
         var sut = new TransferService(authorizer);
 
         // Then
-        assertThrows(UnauthorizedTransferException.class, () -> {
-            // When
-            sut.transfer(transferAmount, fromWallet, toWallet);
-        });
+        assertThrows(
+            UnauthorizedTransferException.class, 
+            () -> {
+                // When
+                sut.transfer(transferAmount, fromWallet, toWallet);
+            }
+        );
     }
 
     @ParameterizedTest
