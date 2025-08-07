@@ -18,8 +18,8 @@ public class Money implements Comparable<Money> {
     this(0L, currency);
   }
 
-  public Money(double amount, Currency currency) {
-    this(new BigDecimal(amount), currency);
+  public Money(Double amount, Currency currency) {
+    this(new BigDecimal(trimAfterFourDecimals(amount, currency)), currency);
   }
 
   public Money(BigDecimal amount, Currency currency) {
@@ -116,16 +116,18 @@ public class Money implements Comparable<Money> {
   }
 
   public static long toLong(BigDecimal amount, Currency currency) {
-    return amount.multiply(new BigDecimal(centFactor(currency))).longValueExact(); 
+    var centFactor = new BigDecimal(centFactor(currency));
+    return amount.multiply(centFactor).longValueExact();
   }
 
   //endregion
 
   //region utility methods
+  @Override
   public boolean equals(Object other) {
     return (other instanceof Money) && equals((Money)other);
   }
-  
+ 
   public boolean equals(Money other) {
     return compareTo(other) == 0;
   }
@@ -159,6 +161,23 @@ public class Money implements Comparable<Money> {
 
   private void assertSameCurrencyAs(Money other) {
     assert currency.equals(other.currency) : "money math mismatch";
+  }
+
+  private static String trimAfterFourDecimals(Double value, Currency currency) {
+    String[] parts = value.toString().split("\\.");
+    if(parts.length == 1) {
+      return parts[0];
+    }
+
+    String integerPart = parts[0];
+    String decimalPart = parts[1];
+
+    int fractionDigits = Math.max(1, currency.getDefaultFractionDigits());
+    if (decimalPart.length() > fractionDigits) {
+      decimalPart = decimalPart.substring(0, fractionDigits);
+    }
+
+    return integerPart + "." + decimalPart;
   }
 
   //endregion
