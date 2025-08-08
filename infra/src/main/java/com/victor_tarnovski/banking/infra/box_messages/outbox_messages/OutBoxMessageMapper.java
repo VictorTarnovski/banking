@@ -1,6 +1,6 @@
 package com.victor_tarnovski.banking.infra.box_messages.outbox_messages;
 
-import com.victor_tarnovski.banking.application.OutBoxMessage;
+import com.victor_tarnovski.banking.application.box_messages.OutBoxMessage;
 import com.victor_tarnovski.banking.infra.box_messages.BoxMessageEntity;
 import com.victor_tarnovski.banking.infra.box_messages.BoxMessageEntityMapper;
 

@@ -3,8 +3,8 @@ package com.victor_tarnovski.banking.application.observers;
 import jakarta.enterprise.event.Observes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.victor_tarnovski.banking.application.BoxMessage;
-import com.victor_tarnovski.banking.application.OutBoxMessage;
+import com.victor_tarnovski.banking.application.box_messages.BoxMessage;
+import com.victor_tarnovski.banking.application.box_messages.OutBoxMessage;
 import com.victor_tarnovski.banking.application.repositories.OutBoxMessageRepository;
 import com.victor_tarnovski.banking.domain.events.TransferReceivedEvent;
 

@@ -1,4 +1,4 @@
-package com.victor_tarnovski.banking.application;
+package com.victor_tarnovski.banking.application.box_messages;
 
 import java.util.function.Function;
 

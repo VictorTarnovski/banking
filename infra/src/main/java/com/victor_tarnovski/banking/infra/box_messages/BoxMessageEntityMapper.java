@@ -1,6 +1,6 @@
 package com.victor_tarnovski.banking.infra.box_messages;
 
-import com.victor_tarnovski.banking.application.BoxMessage;
+import com.victor_tarnovski.banking.application.box_messages.BoxMessage;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
