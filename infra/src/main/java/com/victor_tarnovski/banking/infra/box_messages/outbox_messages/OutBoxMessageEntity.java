@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OutBoxMessageEntity extends BoxMessageEntity {
     public OutBoxMessageEntity(BoxMessageEntity message) {
+        this.id = message.id;
         this.type = message.type;
         this.payload = message.payload;
         this.processedAt = message.processedAt;
