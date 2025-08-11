@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-import com.victor_tarnovski.banking.infra.value_objects.MoneyEntity;
+import com.victor_tarnovski.banking.infra.vo.MoneyEntity;
 
 @Entity
 @Table(name = "wallets")

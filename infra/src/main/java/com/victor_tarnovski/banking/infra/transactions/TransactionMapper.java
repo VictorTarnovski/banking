@@ -8,7 +8,7 @@ import com.victor_tarnovski.banking.domain.aggregates.transactions.WithdrawTrans
 import com.victor_tarnovski.banking.domain.aggregates.transactions.DepositTransaction;
 import com.victor_tarnovski.banking.domain.ids.TransactionId;
 import com.victor_tarnovski.banking.domain.ids.WalletId;
-import com.victor_tarnovski.banking.infra.value_objects.MoneyMapper;
+import com.victor_tarnovski.banking.infra.vo.MoneyMapper;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;

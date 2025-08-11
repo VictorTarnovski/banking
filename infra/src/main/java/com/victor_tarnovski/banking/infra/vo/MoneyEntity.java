@@ -1,4 +1,4 @@
-package com.victor_tarnovski.banking.infra.value_objects;
+package com.victor_tarnovski.banking.infra.vo;
 
 import java.util.Currency;
 

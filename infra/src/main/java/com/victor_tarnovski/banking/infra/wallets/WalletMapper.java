@@ -2,8 +2,8 @@ package com.victor_tarnovski.banking.infra.wallets;
 
 import com.victor_tarnovski.banking.domain.aggregates.Wallet;
 import com.victor_tarnovski.banking.domain.ids.WalletId;
+import com.victor_tarnovski.banking.infra.vo.MoneyMapper;
 import com.victor_tarnovski.banking.domain.ids.UserId;
-import com.victor_tarnovski.banking.infra.value_objects.MoneyMapper;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
