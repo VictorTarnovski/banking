@@ -3,22 +3,26 @@ version: '3.8'
 name: banking
 
 services:
-  quarks-app:
-    container_name: banking-quarkus-app
-    build:
-      dockerfile: ./src/main/docker/Dockerfile.jvm
-    ports:
-      - 8080:8080
   postgres:
-    image: postgres:16-alpine
     container_name: banking-postgres
+    image: postgres:16-alpine
     environment:
       POSTGRES_DB: banking 
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
       - postgres_volume:/var/lib/postgresql/data
+  keycloack:
+    container_name: banking-keycloack
+    image: quay.io/keycloak/keycloak:26.3.2
+    command: start-dev
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+    ports:
+      - 8080:8080
+
 volumes:
   postgres_volume:
