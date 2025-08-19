@@ -20,7 +20,7 @@ public class Money implements Comparable<Money>, Serializable {
   }
 
   public Money(Double amount, Currency currency) {
-    this(new BigDecimal(trimAfterFourDecimals(amount, currency)), currency);
+    this(new BigDecimal(trimAfterFractionDigits(amount, currency)), currency);
   }
 
   public Money(BigDecimal amount, Currency currency) {
@@ -133,10 +133,12 @@ public class Money implements Comparable<Money>, Serializable {
     return compareTo(other) == 0;
   }
 
+  @Override
   public int hashCode() {
     return (int) (amount ^ (amount >>> 32));
   }
 
+  @Override
   public int compareTo(Money other) {
     assertSameCurrencyAs(other);
     if (amount < other.amount) return -1;
@@ -164,7 +166,7 @@ public class Money implements Comparable<Money>, Serializable {
     assert currency.equals(other.currency) : "money math mismatch";
   }
 
-  private static String trimAfterFourDecimals(Double value, Currency currency) {
+  private static String trimAfterFractionDigits(Double value, Currency currency) {
     String[] parts = value.toString().split("\\.");
     if(parts.length == 1) {
       return parts[0];
